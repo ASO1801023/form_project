@@ -1,3 +1,4 @@
+import django_heroku
 """
 Django settings for form_project project.
 
