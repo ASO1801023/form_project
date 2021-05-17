@@ -1,1 +1,0 @@
-Web: gunicorn tegoshiritori.wsgi --log-file -
