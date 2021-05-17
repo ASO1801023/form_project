@@ -91,8 +91,8 @@ soupsieve==2.2.1
 sqlparse==0.4.1
 tensorboard==2.2.1
 tensorboard-plugin-wit==1.6.0.post3
-tensorflow==1.15
-tensorflow-estimator==1.15
+tensorflow==2.20.0
+tensorflow-estimator==2.20.0
 termcolor==1.1.0
 terminado==0.8.3
 testpath==0.4.4
