@@ -1,1 +1,1 @@
-Web: gunicorn tegoshiritori.wsgi --log-file -
+Web: gunicorn tego.wsgi --log-file -
