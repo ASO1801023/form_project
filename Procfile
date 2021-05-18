@@ -1,1 +1,1 @@
-web: gunicorn tegoshiritori.wsgi
+web: gunicorn form_project.wsgi
