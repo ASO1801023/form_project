@@ -90,7 +90,7 @@ def hikaruSys(request):
         
         # しりとりサイド
         df = pd.read_csv('japanese.csv')
-
+        
         # オブジェクトをインスタンス化
         kakasir = kakasi()
         # モードの設定：J(Kanji) to H(Hiragana)
