@@ -3,15 +3,15 @@
  
 <head>
     <meta charset="utf-8" />
-    <title>しりとり Beta</title>
+    <title>しりとり Beta ver2.1</title>
 </head>
  
 <body>
-    <h1>しりとり Beta</h1>
+    <h1>しりとり Beta ver2.1</h1>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">送信</button>
+        <button type="submit" name="button1">送信</button>
     </form>
     <div>
         <table border="1" width="500">
@@ -35,6 +35,12 @@
             </tr>
         </table>
     </div>
+    <p>
+        テスト用として、類義語の1項目を選択してDBへ保存します<br>
+        初めて使用する際は、こちらをクリックして、iteaTreeを一個生成してください。<br>
+        <button type="submit" name="button2">こちら</button>
+    </p>
+    {{ select }}
 </body>
  
 </html>
