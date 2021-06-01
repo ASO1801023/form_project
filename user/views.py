@@ -22,62 +22,94 @@ from user.models import Element
 from pykakasi import kakasi
 # 漢字をひらがな end
 
-def hikaruSys(request):
+def hikaruSys(request): #メインページ処理
+    # urlからidを取得 start
+    now_urlid = 0
+    if 'ideatreeid' in request.GET:
+        now_urlid = request.GET['ideatreeid']
+    # urlからidを取得 end
+
     params = {'ans': '', 'form': None}
+
+    ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
+    element_s = Element.objects.filter(ideatree_id=ideatree_obj['id']) # Elmentを全取得
+    elem_lastnum = int(len(element_s)) # 葉っぱの数 == 最後の数字
+
 
     if request.method == 'POST': # フォームで送信した時
 
-        if 'button_2' in request.POST:
-            kothira()
-            params['form'] = HikaruForm()
-            return render(request, 'user/hikaruPage.html', params)
-
-
         form = HikaruForm(request.POST) #フォームの型を形成(個数とバリデーション)
 
-        firstInput = request.POST['ans']
+        if 'button1' in request.POST:
+            firstInput = request.POST['ans']
 
-        ruyWords = ruySystem(firstInput)
+        if 'button2' in request.POST:
+            firstInput = request.POST['button2']
 
-        params['input'] = firstInput
-        params['ruy1'] = ruyWords[0]
-        params['ruy2'] = ruyWords[1]
-        params['ruy3'] = ruyWords[2]
-
-        siriWords = siritoriSystem(firstInput)
-
-        params['sir1'] = siriWords[0]
-        params['sir2'] = siriWords[1]
-        params['sir3'] = siriWords[2]
+        tegoshiWords = tegoshiSystem(firstInput)
+        params['ruy1'] = tegoshiWords[0]
+        params['ruy2'] = tegoshiWords[1]
+        params['ruy3'] = tegoshiWords[2]
+        params['sir1'] = tegoshiWords[3]
+        params['sir2'] = tegoshiWords[4]
+        params['sir3'] = tegoshiWords[5]
 
         params['form'] = form
 
-        insertElement(params) #DB 登録
+        insertElement(firstInput,elem_lastnum) #DB 登録
         
     else: #ただ開いた時
+
+        params['element_s'] = element_s #全ての葉っぱ
+        tegoshiWord_s = tegoshiSystem(params['element_s'][elem_lastnum-1].name) # 最後の言葉を手越システムにかける[path-1=配列番号]
+        params['ruy1'] = tegoshiWord_s[0]
+        params['ruy2'] = tegoshiWord_s[1]
+        params['ruy3'] = tegoshiWord_s[2]
+        params['sir1'] = tegoshiWord_s[3]
+        params['sir2'] = tegoshiWord_s[4]
+        params['sir3'] = tegoshiWord_s[5]
+
         params['form'] = HikaruForm()
 
-    params['select'] = Element.objects.values('name')
-
+    params['element_s'] = Element.objects.filter(ideatree_id=ideatree_obj['id'])
     return render(request, 'user/hikaruPage.html', params)
 
-def insertElement(acc):
-    #Element(name=acc['input'], color="0", foreigens="1").save()
-    Element(name=acc['ruy1'], path="1", color="2", ideatree_id="1").save()
-    #Element(name=acc['ruy2'], foreigens="1").save()
-    #Element(name=acc['ruy3'], foreigens="1").save()
-    #Element(name=acc['sir1'], foreigens="1").save()
-    #Element(name=acc['sir2'], foreigens="1").save()
-    #Element(name=acc['sir3'], foreigens="1").save()
+
+
+def getIdeaTree(acc): # 指定したidのideatreeを取得
+    retData = {'dummy': ''}
+    ideatree_obj = IdeaTree.objects.filter(id=acc)
+    retData['id'] = ideatree_obj[0].id
+    retData['name'] = ideatree_obj[0].name
+    retData['overview'] = ideatree_obj[0].overview
+    retData['complete_flag'] = ideatree_obj[0].complete_flag
+    retData['idea_theme'] = ideatree_obj[0].idea_theme
+    retData['lastidea_id'] = ideatree_obj[0].lastidea_id
+    return retData
+
+def insertElement(acc,num): # 言葉をElmentに登録
+    Element(name=acc, path=num+1, color="2", ideatree_id="1").save()
     return
 
-def kothira(request): #『こちら』ボタン
+def kothira(): #『こちら』ボタン(廃止)
     Publisher(name="江崎光").save()
-    IdeaTree(name="初めてのツリー",overview="説明",complete_flag="0",idea_theme="林檎",lastidea_id="0",user="1").save()
+    IdeaTree(name="初めてのツリー",overview="説明",complete_flag="0",idea_theme="林檎",lastidea_id="0",user_id="1").save()
     return
 
+def tegoshiSystem(acc):
+    retData = [0] * 6
+    ruyWords = ruySystem(acc)
+    siriWords = siritoriSystem(acc)
+    retData[0] = ruyWords[0]
+    retData[1] = ruyWords[1]
+    retData[2] = ruyWords[2]
+    retData[3] = siriWords[0]
+    retData[4] = siriWords[1]
+    retData[5] = siriWords[2]
+    return retData
 
-def ruySystem(acc): #類義語システム
+
+def ruySystem(acc): #類義語システム(江崎作)
     retData = [0] * 3
     link = "https://ja.wikipedia.org/wiki/"
 
@@ -130,7 +162,7 @@ def ruySystem(acc): #類義語システム
     
     
 
-def siritoriSystem(acc): #しりとりシステム
+def siritoriSystem(acc): #しりとりシステム(かずなり作)
     retData = [0] * 3
     # しりとりサイド
     df = pd.read_csv('japanese.csv')
@@ -158,9 +190,14 @@ def siritoriSystem(acc): #しりとりシステム
     return retData
 
 
-# 初期
+# 初期(使わない)
 
 def new(request):
+    if 'button2' in request.POST:
+            kothira()
+            ff = HikaruForm()
+            return render(request, 'user/hikaruPage.html', ff)
+
     params = {'name': '', 'email': '', 'form': None}
     if request.method == 'POST': # フォームで送信した時
         form = UserForm(request.POST)

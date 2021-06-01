@@ -3,44 +3,44 @@
  
 <head>
     <meta charset="utf-8" />
-    <title>しりとり Beta ver2.1</title>
+    <title>しりとり Beta ver2.3</title>
 </head>
  
 <body>
-    <h1>しりとり Beta ver2.1</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" name="button1">送信</button>
-    </form>
+    <h1>しりとり Beta ver2.3</h1>
     <div>
-        <table border="1" width="500">
-            <tr>
-                <th bgcolor="#EE0000">Answer</th>
-                <th bgcolor="#EE0000" width="200">1</th>
-                <th bgcolor="#EE0000" width="200">2</th>
-                <th bgcolor="#EE0000" width="200">3</th>
-            </tr>
-            <tr>
-                <td bgcolor="#99CC00" align="right" nowrap>類義語</td>
-                <td>{{ ruy1 }}</td>
-                <td>{{ ruy2 }}</td>
-                <td>{{ ruy3 }}</td>
-            </tr>
-            <tr>
-                <td bgcolor="#99CC00" align="right" nowrap>しりとり</td>
-                <td>{{ sir1 }}</td>
-                <td>{{ sir2 }}</td>
-                <td>{{ sir3 }}</td>
-            </tr>
-        </table>
+
+        {{ tester }}
+        {% for element in element_s %}
+        <div>
+            <hr>{{ element.path }}:{{ element.name }}<hr>
+        </div>
+        {% endfor %}
+
+        <div>
+            <hr>
+            <form method="POST">
+                {% csrf_token %}
+                <div><input type="submit" name="button2" value="{{ ruy1 }}"></input></div>
+                <div><input type="submit" name="button2" value="{{ ruy2 }}"></input></div>
+                <div><input type="submit" name="button2" value="{{ ruy3 }}"></input></div>
+                <div><input type="submit" name="button2" value="{{ sir1 }}"></input></div>
+                <div><input type="submit" name="button2" value="{{ sir2 }}"></input></div>
+                <div><input type="submit" name="button2" value="{{ sir3 }}"></input></div>
+            </form>
+            <form method="POST">
+                {% csrf_token %}
+                <div>
+                    {{ form.as_p }}
+                    <button type="submit" name="button1">送信</button>
+                </div>
+            </form>
+            <hr>
+        </div>
     </div>
     <p>
-        テスト用として、類義語の1項目を選択してDBへ保存します<br>
-        初めて使用する際は、こちらをクリックして、iteaTreeを一個生成してください。<br>
-        <button type="submit" name="button2">こちら</button>
+        初めて使用する際は、Publisher(仮想Userテーブル)とiteaTreeを一個生成してください。<br>
     </p>
-    {{ select }}
 </body>
  
 </html>

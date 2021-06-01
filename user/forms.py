@@ -12,7 +12,7 @@ class HikaruForm(forms.Form):
     def clean_ans(self):
         ans = self.cleaned_data['ans']
         if(ans.find('<') != -1 or ans.find('>') != -1):
-            raise forms.ValidationError("Tags are not allowed.")
+            raise forms.ValidationError("button1の文字が未入力")
         elif(ans.endswith("ん") or ans.endswith("ー")):
             raise forms.ValidationError("しりとりが出来ない文字で終わっているよ！")
         return ans
