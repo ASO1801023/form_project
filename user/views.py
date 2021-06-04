@@ -12,6 +12,11 @@ import jaconv
 from collections import Counter
 import random
 import pandas as pd
+import csv
+import pprint
+import locale
+from csv import reader
+import codecs
 # hikaruSys end
 
 from user.models import Publisher
@@ -174,6 +179,20 @@ def siritoriSystem(acc): #しりとりシステム(かずなり作)
     # 変換して出力
     conv = kakasir.getConverter()
     secInput = conv.do(acc)  # => ひらがな化
+
+    # 入力された文字がcsvになかった場合、文字を追加
+    with open('Japanese.csv', encoding='utf-8') as f:
+        csvList = csv.reader(f)
+        flatList = [item for subList in csvList for item in subList]
+
+        list = [acc]
+        a = flatList.count(acc)
+
+        if a == 0:
+            with open('Japanese.csv', "a", encoding='utf-8') as wf:
+                writer = csv.writer(wf)
+                writer.writerow(list)
+    del list
 
     sss = df[df['あー'].str.startswith( secInput[-1] )]
     ddd = sss[~(sss['あー'].str.endswith('ん'))]
