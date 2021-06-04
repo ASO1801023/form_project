@@ -20,6 +20,7 @@ class IdeaTree(models.Model):
     complete_flag = models.IntegerField()
     idea_theme = models.CharField(max_length=300)
     lastidea_id = models.IntegerField()
+    passcode = models.CharField(max_length=6, default=True)
     user = models.ForeignKey(Publisher, on_delete=models.CASCADE)
 
 class Element(models.Model):
