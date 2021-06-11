@@ -22,6 +22,21 @@ from user.models import Element
 from pykakasi import kakasi
 # 漢字をひらがな end
 
+
+#一覧画面処理
+def list(request):
+    #ログインしているuserを取得する処理
+        
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1) #未完成ideaTreeを取得
+
+    context = {
+        'ideatree_incomp' : ideatree_incomp,
+        'ideatree_comp' : ideatree_comp,
+    }
+    return render(request, 'user/list.html', context)
+
+
 def hikaruSys(request): #メインページ処理
     # urlからidを取得 start
     now_urlid = 0
