@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import UserForm
 from .forms import HikaruForm
+from .forms import IdeaTreeForm
+from django.db.models import Max
 
 # hikaruSys sta
 from janome.tokenizer import Tokenizer
@@ -35,14 +37,26 @@ def list(request):
     ideatree_incomp = IdeaTree.objects.filter(complete_flag=0) #未完成ideaTreeを取得 (, user=1)
     ideatree_comp = IdeaTree.objects.filter(complete_flag=1) #未完成ideaTreeを取得
 
+    ideatree_form = IdeaTreeForm()
+
     context = {
         'ideatree_incomp' : ideatree_incomp,
         'ideatree_comp' : ideatree_comp,
+        'ideatree_form' : ideatree_form,
     }
     return render(request, 'user/list.html', context)
 
 
 def hikaruSys(request): #メインページ処理
+
+    #一覧画面から
+    if 'thema_button' in request.POST:
+        IdeaTree(name="b", overview="b", complete_flag="0", idea_theme="適当に入れてます", lastidea_id="0", user_id="1", passcode="999999").save()
+        a = IdeaTree.objects.all().aggregate(Max('id'))
+        
+        Element(name="しりとり", path=1, color="0", ideatree_id=a).save()
+        return
+
     # urlからidを取得 start
     now_urlid = 0
     if 'ideatreeid' in request.GET:

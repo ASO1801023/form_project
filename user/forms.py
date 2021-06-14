@@ -19,15 +19,15 @@ class HikaruForm(forms.Form):
         
 
 #一覧画面　新規作成
-#class IdeaTreeForm(forms.ModelForm):
-#    name = forms.CharField(label='名前', max_length=100)
-#    overview = forms.CharField(label='概要', max_length=300)
-#    complete_flag = forms.IntegerField()
-#    idea_theme = forms.CharField(label='テーマ', max_length=300)
-#    lastidea_id = forms.IntegerField()
-#    user = forms.IntegerField()
+class IdeaTreeForm(forms.Form):
+    name = forms.CharField(label='名前', max_length=100)
+    overview = forms.CharField(label='概要', max_length=300)
+    complete_flag = forms.IntegerField()
+    idea_theme = forms.CharField(label='テーマ', max_length=300)
+    lastidea_id = forms.IntegerField()
+    user = forms.IntegerField()
 
-#    class Meta:
-#        model = IdeaTree
-#        fields = ("name", ) #受け入れ
-#        exclude = () #無視
+    #class Meta:
+    #    model = IdeaTree
+    #    fields = ("name", ) #受け入れ
+    #    exclude = () #無視

@@ -4,6 +4,12 @@
 <head>
     <meta charset="utf-8" />
     <title>しりとり Beta ver2.3</title>
+    <script type="text/javascript">
+        function disp(){
+            // 入力ダイアログを表示 ＋ 入力内容を thema に代入
+            idea_thema = window.prompt("何と組み合わせる？", "");
+        }
+        </script>
 </head>
  
 <body>
@@ -14,6 +20,13 @@
             <tr>
                 <th>新規作成</th>
                 <td>
+                    <form action="/user/hikaruPath/" method="POST">
+                        {% csrf_token %}
+                        <div>
+                            {{ form.as_p }}
+                            <button type="submit" name="thema_button" onclick="disp()">送信</button>
+                        </div>
+                    </form>
                 </td>
             </tr>
           
