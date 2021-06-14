@@ -48,9 +48,10 @@ def list(request):
 
 def list_2(request):
     params = {'c':''}
+    newTheme = request.POST['newTheme']
     #一覧画面から
-    if 'thema_button' in request.POST:
-        IdeaTree(name="a", overview="概要", complete_flag="0", idea_theme="適当に入れてます", lastidea_id="0", user_id="1", passcode="999999").save()
+    if 'newButton' in request.POST:
+        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id="1", passcode="999999").save()
         a = IdeaTree.objects.filter().count()
         b = IdeaTree.objects.filter()
         c = b[a-1].id
@@ -259,21 +260,13 @@ def willComplete(request):
     params['ideatree_obj'] = ideatree_obj
     return render(request, 'user/willCompletePage.html', params)
 
-def completeSys(request):
-    params = {'ans': '', 'form': None}
-
-    # urlからidを取得 start
-    now_urlid = 0
-    if 'ideatreeid' in request.GET:
-        now_urlid = request.GET['ideatreeid']
-    # urlからidを取得 end
-
+def completeSys(request): 
     nowId = request.POST['nowId']
-    newName = request.POST['newName']
-    newOverView = request.POST['newOverView']
+    newName = request.POST['newName'] # テキストボックスから入手
+    newOverView = request.POST['newOverView'] # テキストボックスから入手
 
     ideatree_obj = IdeaTree.objects.filter(id=nowId)
-    IdeaTree(id=ideatree_obj[0].id, name=newName, overview=ideatree_obj[0].overview, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
+    IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
 
     return render(request, 'user/completePage.html')
 

@@ -23,8 +23,8 @@
                     <form action="/user/list_2/" method="POST">
                         {% csrf_token %}
                         <div>
-                            {{ form.as_p }}
-                            <button type="submit" name="thema_button" onclick="disp()">送信</button>
+                            <input type="textbox" name="newTheme" placeholder="テーマ"></input>
+                            <input type="submit" name="newButton" value="新規作成"></input>
                         </div>
                     </form>
                 </td>
