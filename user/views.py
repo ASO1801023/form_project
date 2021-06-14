@@ -62,14 +62,6 @@ def list_2(request):
 
 def hikaruSys(request): #メインページ処理
 
-    #一覧画面から
-    if 'thema_button' in request.POST:
-        IdeaTree(name="b", overview="b", complete_flag="0", idea_theme="適当に入れてます", lastidea_id="0", user_id="1", passcode="999999").save()
-        a = IdeaTree.objects.all().aggregate(Max('id'))
-        
-        Element(name="しりとり", path=1, color="0", ideatree_id=a).save()
-        return
-
     # urlからidを取得 start
     now_urlid = 0
     if 'ideatreeid' in request.GET:
