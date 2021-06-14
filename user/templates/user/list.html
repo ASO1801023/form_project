@@ -9,7 +9,7 @@
             // 入力ダイアログを表示 ＋ 入力内容を thema に代入
             idea_thema = window.prompt("何と組み合わせる？", "");
         }
-        </script>
+    </script>
 </head>
  
 <body>
@@ -20,7 +20,7 @@
             <tr>
                 <th>新規作成</th>
                 <td>
-                    <form action="/user/hikaruPath/" method="POST">
+                    <form action="/user/list_2/" method="POST">
                         {% csrf_token %}
                         <div>
                             {{ form.as_p }}
