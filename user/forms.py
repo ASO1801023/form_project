@@ -17,9 +17,12 @@ class HikaruForm(forms.Form):
             raise forms.ValidationError("しりとりが出来ない文字で終わっているよ！")
         return ans
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #class atsushiForm(forms.Form):
 =======
+=======
+>>>>>>> 35815a498e0145896a18cac74e7e0fc54cb3e014
         
 
 #一覧画面　新規作成
@@ -34,5 +37,9 @@ class IdeaTreeForm(forms.Form):
     #class Meta:
     #    model = IdeaTree
     #    fields = ("name", ) #受け入れ
+<<<<<<< HEAD
+    #    exclude = () #無視
+>>>>>>> 35815a498e0145896a18cac74e7e0fc54cb3e014
+=======
     #    exclude = () #無視
 >>>>>>> 35815a498e0145896a18cac74e7e0fc54cb3e014
