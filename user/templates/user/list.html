@@ -23,8 +23,8 @@
                     <form action="/user/list_2/" method="POST">
                         {% csrf_token %}
                         <div>
-                            {{ form.as_p }}
-                            <button type="submit" name="thema_button" onclick="disp()">送信</button>
+                            <input type="textbox" name="newTheme" placeholder="テーマ"></input>
+                            <input type="submit" name="newButton" value="新規作成"></input>
                         </div>
                     </form>
                 </td>
@@ -32,26 +32,24 @@
           
             <tr>
                 <th>未完成</th>
-                <form action="/user/hikaruPath/" method="GET">
-                    {% for incomplete in ideatree_incomp %}
-                    {% csrf_token %}
-                    <td>
-                        <button type="submit" name="ideatreeid" value="{{ incomplete.id }}">{{ incomplete.name }}</button>
-                    </td>
-                    {% endfor %}
-                </form>
+                {% for incomplete in ideatree_incomp %}
+                <td>
+                    <a href="/user/hikaruPath/?ideatreeid={{ incomplete.id }}">
+                        <input type="button" name="dummy" value="{{ incomplete.name }}"></input>
+                    </a>
+                </td>
+                {% endfor %}
             </tr>
             
             <tr>
                 <th>完成</th>
-                <form method="GET">
-                    {% for complete in ideatree_comp %}
-                    {% csrf_token %}
-                    <td>
-                        <button type="submit" name="ideatreeid" value="{{ complete.id }}">{{ complete.name }}</button>
-                    </td>
-                    {% endfor %}
-                </form>
+                {% for complete in ideatree_comp %}
+                <td>
+                    <a href="/user/completed/?ideatreeid={{ incomplete.id }}">
+                        <input type="button" name="dummy" value="{{ incomplete.name }}"></input>
+                    </a>
+                </td>
+                {% endfor %}
             </tr>
           
         </table>
