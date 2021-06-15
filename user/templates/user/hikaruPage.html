@@ -1,55 +1,43 @@
-<!DOCTYPE html>
-<html>
- 
-<head>
-    <meta charset="utf-8" />
-    <title>しりとり Beta ver2.3</title>
-</head>
- 
-<body>
-    <h1>しりとり Beta ver2.3</h1>
+{% extends 'user/tegoshiBase.html' %}
+
+{% block content %}
+
+<h1>しりとり Beta ver2.3</h1>
+<div>
+
+    {{ tester }}
+    {% for element in element_s %}
     <div>
-
-        {{ tester }}
-        {% for element in element_s %}
-        <div>
-            <hr>{{ element.path }}:{{ element.name }}<hr>
-        </div>
-        {% endfor %}
-
-        <div>
-            <hr>
-            <form method="POST">
-                {% csrf_token %}
-                <div><input type="submit" name="button2" value="{{ ruy1 }}"></input></div>
-                <div><input type="submit" name="button2" value="{{ ruy2 }}"></input></div>
-                <div><input type="submit" name="button2" value="{{ ruy3 }}"></input></div>
-                <div><input type="submit" name="button2" value="{{ sir1 }}"></input></div>
-                <div><input type="submit" name="button2" value="{{ sir2 }}"></input></div>
-                <div><input type="submit" name="button2" value="{{ sir3 }}"></input></div>
-            </form>
-            <form method="POST">
-                {% csrf_token %}
-                <div>
-                    {{ form.as_p }}
-                    <button type="submit" name="button1">送信</button>
-                </div>
-            </form>
-            <a href="/user/willCompleteQ/?ideatreeid={{ ideatree_obj.id }}">
-                {{ ideatree_obj.id }}完成させる
-            </a>
-            <hr>
-        </div>
+        <hr>{{ element.path }}:{{ element.name }}<hr>
     </div>
-    <p>
-        初めて使用する際は、Publisher( 仮想Userテーブル )とiteaTreeを一個生成してください。<br>
-    </p>
-</body>
- 
-</html>
+    {% endfor %}
 
-<style>
-    html{
-        text-align:center;
-    }
-</style>
+    <div>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <div><input type="submit" name="button2" value="{{ ruy1 }}"></input></div>
+            <div><input type="submit" name="button2" value="{{ ruy2 }}"></input></div>
+            <div><input type="submit" name="button2" value="{{ ruy3 }}"></input></div>
+            <div><input type="submit" name="button2" value="{{ sir1 }}"></input></div>
+            <div><input type="submit" name="button2" value="{{ sir2 }}"></input></div>
+            <div><input type="submit" name="button2" value="{{ sir3 }}"></input></div>
+        </form>
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+                <button type="submit" name="button1">送信</button>
+            </div>
+        </form>
+        <a href="/user/willCompleteQ/?ideatreeid={{ ideatree_obj.id }}">
+            {{ ideatree_obj.id }}完成させる
+        </a>
+        <hr>
+    </div>
+</div>
+<p>
+    初めて使用する際は、Publisher( 仮想Userテーブル )とiteaTreeを一個生成してください。<br>
+</p>
+
+{% endblock %}
