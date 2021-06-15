@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ツリー検索</title>
+</head>
+<body>
+    <h1>ツリー検索</h1>
+        <hr>
+            <div>
+                {{ tester }}
+                {% for element in element_s %}
+                <div>
+                    <hr>{{ element.path }}:{{ element.name }}<hr>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <p>
+                <dic><input type="number" id=treeID" name="treeID" value=""></dic>
+                <input type="submit" name="set" value="送信する">
+                <input type="reset" value="入力内容をリセットする">
+                </p>
+            </div>
+            <div><input type="submit" name="random" value="ランダムに表示する"></div>
+        </form>
+        <hr>
+    </div>
+</body>
+</html>

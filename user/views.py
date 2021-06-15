@@ -231,3 +231,34 @@ def newBack(request):
     params = {'message': 'newです'}
     return render(request, 'user/new.html', params)
 
+def search(request):
+    params = {'ans': '', 'form': None}
+    if request.method == 'POST':
+        #送信ボタンが押された時
+        if 'set' in request.POST:
+            TreeID = IdeaTree.objects.filter(passcode=request.POST['treeID'])
+            ideatree_obj = getIdeaTree(TreeID[0].id) #ideatree取得
+            element_s = Element.objects.filter(ideatree_id=ideatree_obj['id']) # Elmentを全取得
+            elem_lastnum = int(len(element_s)) # 葉っぱの数 == 最後の数字
+
+            params['form'] = HikaruForm()
+
+        #randomボタンが押された時
+        elif 'random' in request.POST:
+            #aaaTreeID = IdeaTree.objects.filter(passcode__gte='0')
+            aaaTreeID = IdeaTree.objects.all()
+            TreeIDcount = IdeaTree.objects.all().count()
+            num = random.randint(0,TreeIDcount)
+            if num>=1:
+                num=num-1
+
+            #randomTreeID = random.shuffle(aaaTreeID)
+            ideatree_obj = getIdeaTree(aaaTreeID[num].id)
+            element_s = Element.objects.filter(ideatree_id=ideatree_obj['id']) # Elmentを全取得
+            elem_lastnum = int(len(element_s)) # 葉っぱの数 == 最後の数字
+
+            params['form'] = HikaruForm()
+
+        params['element_s'] = Element.objects.filter(ideatree_id=ideatree_obj['id'])
+
+    return render(request, 'user/search.html', params)

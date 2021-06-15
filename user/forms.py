@@ -16,3 +16,5 @@ class HikaruForm(forms.Form):
         elif(ans.endswith("ん") or ans.endswith("ー")):
             raise forms.ValidationError("しりとりが出来ない文字で終わっているよ！")
         return ans
+
+#class atsushiForm(forms.Form):
