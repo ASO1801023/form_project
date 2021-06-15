@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="utf-8" />
+    <title>しりとり Beta ver2.3</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+</head>
+ 
+<body>
+<div>
+    <!-- ステータスバー(大画面) -->
+
+    <div class="d-none d-sm-block">
+
+        <nav class="navbar navbar-expand-lg fixed-top" style="background-color:#FFDDDD;">
+            <!-- navbar-dark -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <a class="navbar-brand waves-effect" href="">
+                <!-- <img src="/image/theWorldLogo.png" alt="●" class="theWorld"> -->
+                TEGOSHISYSTEM
+            </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">USERNAME : NONE</a>
+                    </li>
+
+                    <li class="nav-item active">
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" id="dd2L" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MENU</a>
+                        <div class="dropdown-menu dropdown-info" aria-labelledby="dd2L">
+                            <a class="dropdown-item waves-effect waves-light" href="">レッスン登録</a>
+                            <a class="dropdown-item waves-effect waves-light" href="">レッスン検索</a>
+                            <a class="dropdown-item waves-effect waves-light" href="">プロフィール</a>
+                            <a class="dropdown-item waves-effect waves-light" href="">チャット</a>
+                            <a class="dropdown-item waves-effect waves-light" href="">レッスン一覧</a>
+                            <a class="dropdown-item waves-effect waves-light" href="">レッスン履歴</a>
+                        </div>
+                    </li>
+                </ul>
+                
+            </div>
+        </nav>
+
+
+    </div>
+    <!-- // ステータスバー(大画面) -->
+    <div class="container-fluid my-5" style="padding-top:15px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+
+
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+    @yield("script")
+    </div>
+</body>
+<footer class=" text-center color-black py-2" style="background-color:#FFDDDD; bottom:0; position:fixed; width:100%; margin:0px;">
+    © 2020 Aso College Group TeamTegoshi.
+</footer>
+ 
+</html>
+
+
+<style>
+    html{
+        text-align:center;
+    }
+</style>

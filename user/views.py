@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import UserForm
 from .forms import HikaruForm
+from .forms import IdeaTreeForm
+from django.db.models import Max
 
 # hikaruSys sta
 from janome.tokenizer import Tokenizer
@@ -27,7 +29,44 @@ from user.models import Element
 from pykakasi import kakasi
 # 漢字をひらがな end
 
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def index(request):
+    return render(request, 'user/index.html')
+
+#一覧画面処理
+def list(request):
+    #ログインしているuserを取得する処理
+        
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1) #未完成ideaTreeを取得
+
+    ideatree_form = IdeaTreeForm()
+
+    context = {
+        'ideatree_incomp' : ideatree_incomp,
+        'ideatree_comp' : ideatree_comp,
+        'ideatree_form' : ideatree_form,
+    }
+    return render(request, 'user/list.html', context)
+
+def list_2(request):
+    params = {'c':''}
+    newTheme = request.POST['newTheme']
+    #一覧画面から
+    if 'newButton' in request.POST:
+        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id="1", passcode="999999").save()
+        a = IdeaTree.objects.filter().count()
+        b = IdeaTree.objects.filter()
+        c = b[a-1].id
+        Element(name="しりとり", path=1, color="1", ideatree_id=c).save()
+        params['c'] = c
+        return render(request, 'user/list_2.html', params)
+
+
 def hikaruSys(request): #メインページ処理
+
     # urlからidを取得 start
     now_urlid = 0
     if 'ideatreeid' in request.GET:
@@ -45,10 +84,10 @@ def hikaruSys(request): #メインページ処理
 
         form = HikaruForm(request.POST) #フォームの型を形成(個数とバリデーション)
 
-        if 'button1' in request.POST:
+        if 'button1' in request.POST: #テキストボックスのを使う時
             firstInput = request.POST['ans']
 
-        if 'button2' in request.POST:
+        if 'button2' in request.POST: #候補ボタンを押した時
             firstInput = request.POST['button2']
 
         tegoshiWords = tegoshiSystem(firstInput)
@@ -61,7 +100,7 @@ def hikaruSys(request): #メインページ処理
 
         params['form'] = form
 
-        insertElement(firstInput,elem_lastnum) #DB 登録
+        insertElement(firstInput,elem_lastnum,ideatree_obj['id']) #DB 登録
         
     else: #ただ開いた時
 
@@ -76,9 +115,9 @@ def hikaruSys(request): #メインページ処理
 
         params['form'] = HikaruForm()
 
+    params['ideatree_obj'] = ideatree_obj
     params['element_s'] = Element.objects.filter(ideatree_id=ideatree_obj['id'])
     return render(request, 'user/hikaruPage.html', params)
-
 
 
 def getIdeaTree(acc): # 指定したidのideatreeを取得
@@ -92,14 +131,10 @@ def getIdeaTree(acc): # 指定したidのideatreeを取得
     retData['lastidea_id'] = ideatree_obj[0].lastidea_id
     return retData
 
-def insertElement(acc,num): # 言葉をElmentに登録
-    Element(name=acc, path=num+1, color="2", ideatree_id="1").save()
+def insertElement(acc,num,ideatree_id): # 言葉をElmentに登録
+    Element(name=acc, path=num+1, color="2", ideatree_id=ideatree_id).save()
     return
 
-def kothira(): #『こちら』ボタン(廃止)
-    Publisher(name="江崎光").save()
-    IdeaTree(name="初めてのツリー",overview="説明",complete_flag="0",idea_theme="林檎",lastidea_id="0",user_id="1").save()
-    return
 
 def tegoshiSystem(acc):
     retData = [0] * 6
@@ -164,8 +199,7 @@ def ruySystem(acc): #類義語システム(江崎作)
             retData = [adapter[1][0], 'Dummy', 'Dummy']
     
     return retData
-    
-    
+ 
 
 def siritoriSystem(acc): #しりとりシステム(かずなり作)
     retData = [0] * 3
@@ -209,25 +243,34 @@ def siritoriSystem(acc): #しりとりシステム(かずなり作)
     return retData
 
 
+def willComplete(request):
+    params = {'ans': '', 'form': None}
+    # urlからidを取得 start
+    now_urlid = 0
+    if 'ideatreeid' in request.GET:
+        now_urlid = request.GET['ideatreeid']
+    # urlからidを取得 end
+
+    ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
+    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid) # Elmentを全取得
+
+    params['ideatree_obj'] = ideatree_obj
+    return render(request, 'user/willCompletePage.html', params)
+
+def completeSys(request): 
+    nowId = request.POST['nowId']
+    newName = request.POST['newName'] # テキストボックスから入手
+    newOverView = request.POST['newOverView'] # テキストボックスから入手
+
+    ideatree_obj = IdeaTree.objects.filter(id=nowId)
+    IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
+
+    return render(request, 'user/completePage.html')
+
+
 # 初期(使わない)
 
 def new(request):
-    if 'button2' in request.POST:
-            kothira()
-            ff = HikaruForm()
-            return render(request, 'user/hikaruPage.html', ff)
-
-    params = {'name': '', 'email': '', 'form': None}
-    if request.method == 'POST': # フォームで送信した時
-        form = UserForm(request.POST)
-        params['name'] = request.POST['name']
-        params['email'] = request.POST['email']
-        params['form'] = form
-    else: #ただ開いた時
-        params['form'] = UserForm()
-    return render(request, 'user/new.html', params)
-
-def newBack(request):
     params = {'message': 'newです'}
     return render(request, 'user/new.html', params)
 
