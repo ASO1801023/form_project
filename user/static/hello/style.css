@@ -2,11 +2,11 @@
 
 h1 {
     margin: 50px 0;
-  color: #fff;
-  font-family: 'Indie Flower', cursive;
-  font-size: 48px;
-  font-weight: normal;
-  text-align: center;
+    color: #fff;
+    font-family: 'Indie Flower', cursive;
+    font-size: 48px;
+    font-weight: normal;
+    text-align: center;
 }
 body{
     background-image: url('../images/books.jpg');

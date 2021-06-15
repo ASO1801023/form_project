@@ -210,6 +210,8 @@ def siritoriSystem(acc): #しりとりシステム(かずなり作)
     kakasir = kakasi()
     # モードの設定：J(Kanji) to H(Hiragana)
     kakasir.setMode('J', 'H')
+    # モードの設定：K(Katakana) to H(Hiragana)
+    kakasir.setMode('K', 'H')
     # 変換して出力
     conv = kakasir.getConverter()
     secInput = conv.do(acc)  # => ひらがな化
