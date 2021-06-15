@@ -29,6 +29,11 @@ from user.models import Element
 from pykakasi import kakasi
 # 漢字をひらがな end
 
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def index(request):
+    return render(request, 'user/index.html')
 
 #一覧画面処理
 def list(request):
