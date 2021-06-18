@@ -65,6 +65,26 @@ def list_2(request):
         return render(request, 'user/list_2.html', params)
 
 
+def completed(request):
+    # urlからidを取得 start
+    now_urlid = 0
+    if 'ideatreeid' in request.GET:
+        now_urlid = request.GET['ideatreeid']
+    # urlからidを取得 end
+
+    params = {'ans': ''}
+
+    ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
+    element_s = Element.objects.filter(ideatree_id=ideatree_obj['id']) # Elmentを全取得
+    elem_lastnum = int(len(element_s)) # 葉っぱの数 == 最後の数字
+
+    params['element_s'] = element_s #全ての葉っぱ
+
+    params['ideatree_obj'] = ideatree_obj
+    params['element_s'] = Element.objects.filter(ideatree_id=ideatree_obj['id'])
+    return render(request, 'user/completed.html', params)
+
+
 def hikaruSys(request): #メインページ処理
 
     # urlからidを取得 start

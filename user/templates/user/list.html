@@ -34,8 +34,8 @@
             <th>完成</th>
             {% for complete in ideatree_comp %}
             <td>
-                <a href="/user/completed/?ideatreeid={{ incomplete.id }}">
-                    <input type="button" name="dummy" value="{{ incomplete.name }}"></input>
+                <a href="/user/completed/?ideatreeid={{ complete.id }}">
+                    <input type="button" name="dummy" value="{{ complete.name }}"></input>
                 </a>
             </td>
             {% endfor %}

@@ -11,4 +11,5 @@ urlpatterns = [
     path('willCompleteQ/', views.willComplete, name='willComplete'),
     path('complete/', views.completeSys, name='complete'),
     path('list_2/', views.list_2, name="list_2"),
+    path('completed/', views.completed, name="completed"),
 ]
