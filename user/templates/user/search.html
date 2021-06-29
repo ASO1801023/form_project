@@ -1,6 +1,11 @@
+{% extends 'user/tegoshiBase.html' %}
+
+{% block content %}
+
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="miura.css">
     <meta charset="utf-8" />
     <title>ツリー検索</title>
 </head>
@@ -11,7 +16,7 @@
                 {{ tester }}
                 {% for element in element_s %}
                 <div>
-                    <hr>{{ element.path }}:{{ element.name }}<hr>
+                    <p class="text-Dark">{{ element.path }}:{{ element.name }}<p>
                 </div>
                 {% endfor %}
             </div>
@@ -20,9 +25,13 @@
             {% csrf_token %}
             <div>
                 <p>
-                <dic><input type="number" id=treeID" name="treeID" value=""></dic>
-                <input type="submit" name="set" value="送信する">
-                <input type="reset" value="入力内容をリセットする">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="treeID" name="treeID" placeholder="ID入力" aria-label="ID入力" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <input class="btn btn-primary" type="submit" name="set" value="送信">
+                        </div>
+                    </div>
+
                 </p>
             </div>
             <div><input type="submit" name="random" value="ランダムに表示する"></div>
@@ -31,3 +40,4 @@
     </div>
 </body>
 </html>
+{% endblock %}

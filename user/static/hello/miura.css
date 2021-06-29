@@ -64,3 +64,8 @@ body{
     text-align: center;
     margin-top: 5%;
 }
+.input-group-append{
+    width: 150px;
+    height: 150px;
+    position:static;
+}
