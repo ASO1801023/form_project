@@ -2,42 +2,199 @@
 
 {% block content %}
 
-<h1>しりとり Beta ver2.3</h1>
-<div>
+<div style="margin:0 5%;">
+    <div class="row pt-5">
 
-    {{ tester }}
-    {% for element in element_s %}
-    <div>
-        <hr>{{ element.path }}:{{ element.name }}<hr>
-    </div>
-    {% endfor %}
-
-    <div>
-        <hr>
-        <form method="POST">
-            {% csrf_token %}
-            <div><input type="submit" name="button2" value="{{ ruy1 }}"></input></div>
-            <div><input type="submit" name="button2" value="{{ ruy2 }}"></input></div>
-            <div><input type="submit" name="button2" value="{{ ruy3 }}"></input></div>
-            <div><input type="submit" name="button2" value="{{ sir1 }}"></input></div>
-            <div><input type="submit" name="button2" value="{{ sir2 }}"></input></div>
-            <div><input type="submit" name="button2" value="{{ sir3 }}"></input></div>
-        </form>
-        <form method="POST">
-            {% csrf_token %}
-            <div>
-                {{ form.as_p }}
-                <button type="submit" name="button1">送信</button>
+        <div class="col-sm-4">
+            <div class="card p-4" style="background-color: #FDCBE0;">
+                <div class="card p-4 mb-2" style="background-color: #FFEBF0;">
+                    <h5>プロジェクト名 :</h5>
+                    <h2> {{ ideatree_obj.name }}</h2>
+                </div>
+                <hr>
+                <h5>作成者:dummy</h5>
+                <h6>単語数:<b>{{ element_len }}</b>個  閲覧数:<b>256</b>嘉威</h6>
+                <br>
+                <h6><b>概要 : </b></h6>
+                <h6>こんにちは。こんにちはこんにちはこんにちはこんにちはこんにちはこんにちは</h6>
+                <hr>
+                <div class="pt-2">
+                    <a href="/user/willCompleteQ/?ideatreeid={{ ideatree_obj.id }}">
+                        <div class="btn btn-primary">
+                            完成させる
+                        </div>
+                    </a>
+                </div>
             </div>
-        </form>
-        <a href="/user/willCompleteQ/?ideatreeid={{ ideatree_obj.id }}">
-            {{ ideatree_obj.id }}完成させる
-        </a>
-        <hr>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="card p-4">
+                    <div class="col-sm-12">
+                        <i class="fa fa-question-circle-o text-primary waves-effect" aria-hidden="true" data-toggle="modal" data-target="#helpPop"></i>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <h1>
+                            TEGOSHIRITORI
+                        </h1>
+                        <hr>
+                    </div>
+                    
+                    <div class="col-sm-12 text-center">⬇︎START!!⬇︎</div>
+                    {% for element in element_s %}
+                    <div class="col-sm-12 text-center">
+                        <div class="balloon1">
+                            <p>{{ element.name }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="col-sm-12 text-center">
+                        <hr>
+                        <h2>⬇︎Please select WORD!!⬇︎</h2>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input class="balloon1" type="submit" name="button2" value="{{ ruy1 }}"></input>
+                            <input class="balloon1" type="submit" name="button2" value="{{ ruy2 }}"></input>
+                            <input class="balloon1" type="submit" name="button2" value="{{ ruy3 }}"></input>
+                            <input class="balloon1" type="submit" name="button3" value="{{ sir1 }}"></input>
+                            <input class="balloon1" type="submit" name="button3" value="{{ sir2 }}"></input>
+                            <input class="balloon1" type="submit" name="button3" value="{{ sir3 }}"></input>
+                        </form>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="balloon1">
+                                自分で考える！
+                                {{ form.as_p }}
+                                <button class="btn btn-primary" type="submit" name="button1">送信</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
-<p>
-    初めて使用する際は、Publisher( 仮想Userテーブル )とiteaTreeを一個生成してください。<br>
-</p>
+
+<!-- ヘルプポップアップ -->
+<div class="modal fade right" id="helpPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalPreviewLabel"><i class="fa fa-question-circle-o" aria-hidden="true"></i> HELP</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5>□TEGOSHIRITORIページとは?</h5>
+                        <h6>......しりとりを通じて新たなアイデアを生み出すページです。</h6><br>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <h3>例</h3>
+                    </div>
+
+                    <div class="row m-5">
+                        <div class="col-sm-5 text-center">
+                            <div class="balloon1"><p>しりとり</p></div><br>
+                            <div class="balloon1"><p>りんご</p></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ヘルプポップアップ -->
+
+<style>
+.color0{
+    background: #D0D0D0;
+}
+.color1{
+    background: #F8BBD0;
+}
+.color2{
+    background: #BBDEFB;
+}
+.color3{
+    background: #B2DFDB;
+}
+
+.balloon1 {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 7px 10px;
+    min-width: 120px;
+    max-width: 100%;
+    color: #555;
+    font-size: 16px;
+    background: #e0edff;
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.balloon1:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -15px;
+    border: 15px solid transparent;
+    border-top: 15px solid #e0edff;
+
+}
+
+.balloon1 p {
+    margin: 0;
+    padding: 0;
+}
+
+.feeling1 {
+  position: relative;
+  margin: 2em 0 2em 40px;
+  padding: 15px;
+  background: #fff0c6;
+  border-radius: 30px;
+}
+
+.feeling1:before {  
+  content: "";
+  position: absolute;
+  left: -38px;
+  width: 13px;
+  height: 12px;
+  bottom: 0;
+  background: #fff0c6;
+  border-radius: 50%;
+}
+
+.feeling1:after {
+  content: "";
+  position: absolute;
+  left: -24px;
+  width: 20px;
+  height: 18px;
+  bottom: 3px;
+  background: #fff0c6;
+  border-radius: 50%;
+}
+.feeling1 p {
+  margin: 0; 
+  padding: 0;
+}
+
+</style>
 
 {% endblock %}

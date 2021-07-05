@@ -60,7 +60,7 @@ def list_2(request):
         a = IdeaTree.objects.filter().count()
         b = IdeaTree.objects.filter()
         c = b[a-1].id
-        Element(name="しりとり", path=1, color="1", ideatree_id=c).save()
+        Element(name="しりとり", path=1, color="0", ideatree_id=c).save()
         params['c'] = c
         return render(request, 'user/list_2.html', params)
 
@@ -103,12 +103,18 @@ def hikaruSys(request): #メインページ処理
     if request.method == 'POST': # フォームで送信した時
 
         form = HikaruForm(request.POST) #フォームの型を形成(個数とバリデーション)
+        colorVal = 1
 
         if 'button1' in request.POST: #テキストボックスのを使う時
             firstInput = request.POST['ans']
 
-        if 'button2' in request.POST: #候補ボタンを押した時
+        if 'button2' in request.POST: #候補ボタンを押した時(連想)
             firstInput = request.POST['button2']
+            colorVal = 2
+        
+        if 'button3' in request.POST: #候補ボタンを押した時(しりとり)
+            firstInput = request.POST['button3']
+            colorVal = 3
 
         tegoshiWords = tegoshiSystem(firstInput)
         params['ruy1'] = tegoshiWords[0]
@@ -120,7 +126,7 @@ def hikaruSys(request): #メインページ処理
 
         params['form'] = form
 
-        insertElement(firstInput,elem_lastnum,ideatree_obj['id']) #DB 登録
+        insertElement(firstInput,elem_lastnum,ideatree_obj['id'],colorVal) #DB 登録
         
     else: #ただ開いた時
 
@@ -137,6 +143,7 @@ def hikaruSys(request): #メインページ処理
 
     params['ideatree_obj'] = ideatree_obj
     params['element_s'] = Element.objects.filter(ideatree_id=ideatree_obj['id'])
+    params['element_len'] = len(params['element_s'])
     return render(request, 'user/hikaruPage.html', params)
 
 
@@ -151,8 +158,8 @@ def getIdeaTree(acc): # 指定したidのideatreeを取得
     retData['lastidea_id'] = ideatree_obj[0].lastidea_id
     return retData
 
-def insertElement(acc,num,ideatree_id): # 言葉をElmentに登録
-    Element(name=acc, path=num+1, color="2", ideatree_id=ideatree_id).save()
+def insertElement(acc,num,ideatree_id,colorVal): # 言葉をElmentに登録
+    Element(name=acc, path=num+1, color=colorVal, ideatree_id=ideatree_id).save()
     return
 
 
