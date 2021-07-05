@@ -8,15 +8,16 @@
         <div class="col-sm-4">
             <div class="card p-4" style="background-color: #FDCBE0;">
                 <div class="card p-4 mb-2" style="background-color: #FFEBF0;">
-                    <h5>プロジェクト名 :</h5>
+                    <h5>テーマ : {{ ideatree_obj.idea_theme }}</h5>
                     <h2> {{ ideatree_obj.name }}</h2>
                 </div>
                 <hr>
                 <h5>作成者:dummy</h5>
-                <h6>単語数:<b>{{ element_len }}</b>個  閲覧数:<b>256</b>嘉威</h6>
+                <h6>単語数:<b>{{ element_len }}</b>個  閲覧数:<b>0</b>回</h6>
                 <br>
                 <h6><b>概要 : </b></h6>
-                <h6>こんにちは。こんにちはこんにちはこんにちはこんにちはこんにちはこんにちは</h6>
+                <h6>{{ ideatree_obj.overview }}</h6><br>
+                <h6>CODE : {{ ideatree_obj.passcode }}</h6>
                 <hr>
                 <div class="pt-2">
                     <a href="/user/willCompleteQ/?ideatreeid={{ ideatree_obj.id }}">

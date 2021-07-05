@@ -156,6 +156,7 @@ def getIdeaTree(acc): # 指定したidのideatreeを取得
     retData['complete_flag'] = ideatree_obj[0].complete_flag
     retData['idea_theme'] = ideatree_obj[0].idea_theme
     retData['lastidea_id'] = ideatree_obj[0].lastidea_id
+    retData['passcode'] = ideatree_obj[0].passcode
     return retData
 
 def insertElement(acc,num,ideatree_id,colorVal): # 言葉をElmentに登録
