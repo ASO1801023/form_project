@@ -31,6 +31,7 @@ from pykakasi import kakasi
 
 from django.shortcuts import render
 from django.http import HttpResponse
+import random
 
 def index(request):
     return render(request, 'user/index.html')
@@ -54,9 +55,10 @@ def list(request):
 def list_2(request):
     params = {'c':''}
     newTheme = request.POST['newTheme']
+    code = random.randrange(10**5,10**6)
     #一覧画面から
     if 'newButton' in request.POST:
-        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id="1", passcode="999999").save()
+        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id="1", passcode=code).save()
         a = IdeaTree.objects.filter().count()
         b = IdeaTree.objects.filter()
         c = b[a-1].id
