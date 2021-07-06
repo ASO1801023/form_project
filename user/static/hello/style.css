@@ -8,6 +8,20 @@ h1 {
     font-weight: normal;
     text-align: center;
 }
+a {
+    padding: 0 10px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgb(49, 170, 226) 50%);
+    background-position: 0 0;
+    background-size: 200% auto;
+    transition: .3s;
+    font-size: 80px;
+    text-align:center;
+}
+a:hover {
+background-position: -100% 0;
+color: #fff;
+}
+
 body{
     background-image: url('../images/books.jpg');
     /* 画像を常に天地左右の中央に配置 */
@@ -59,6 +73,10 @@ body{
 }
 .button_wrapper {
     text-align:center;
+}
+.button_wrapper2 {
+    text-align:center;
+    margin-top: 350px;
 }
 .text {
     text-align: center;

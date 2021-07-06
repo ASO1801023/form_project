@@ -5,7 +5,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="{% static 'hello/hikaru.css' %}">
+     <link rel="stylesheet" type="text/css" href="{% static 'hello/hikaru.css' %}">
     <title>しりとり Beta ver2.3</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -24,25 +24,25 @@
 
     <div class="d-none d-sm-block">
 
-        <nav class="navbar navbar-expand-lg fixed-top" style="background-color:#FFDDDD;">
+        <nav class="navbar navbar-expand-lg fixed-top" style="background-color:#551033;">
             <!-- navbar-dark -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                <a class="navbar-brand waves-effect" href="">
-                <!-- <img src="/image/theWorldLogo.png" alt="●" class="theWorld"> -->
-                TEGOSHISYSTEM
-                </a>
+                    <a class="navbar-brand waves-effect" href="">
+                    <!-- <img src="/image/theWorldLogo.png" alt="●" class="theWorld"> -->
+                    TEGOSHISYSTEM
+                    </a>
                     <li class="nav-item">
-                        <a class="nav-link" href="">USERNAME : NONE</a>
+                        <a class="nav-link text-white" href="">USERNAME : NONE</a>
                     </li>
 
                     <li class="nav-item active">
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle waves-effect waves-light" id="dd2L" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MENU</a>
+                        <a class="nav-link dropdown-toggle waves-effect waves-light text-white" id="dd2L" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MENU</a>
                         <div class="dropdown-menu dropdown-info" aria-labelledby="dd2L">
                             <a class="dropdown-item waves-effect waves-light" href="/user/list">リスト</a>
                             <a class="dropdown-item waves-effect waves-light" href="">プロフィール(未)</a>
@@ -75,8 +75,8 @@
     @yield("script")
     </div>
 </body>
-<footer class=" text-center color-black py-2" style="background-color:#FFDDDD; bottom:0; position:fixed; width:100%; margin:0px;">
-    © 2020 Aso College Group TeamTegoshi.
+<footer class="text-white text-center color-black py-2" style="background-color:#551033; bottom:0; position:fixed; width:100%; margin:0px;">
+    © 2021 Aso College Group TeamTegoshi.
 </footer>
  
 </html>
@@ -85,5 +85,32 @@
 <style>
     html{
         text-align:center;
+    }
+    .balloon3 {
+        position: relative;
+        display: inline-block;
+        margin: 1.5em 0;
+        padding: 0 5px;
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        color: #FFF;
+        font-size: 20px;
+        font-weight: bold;
+        background: #70a6ff;
+        border-radius: 50%;
+        box-sizing: border-box;
+        }
+
+        .balloon3:before {
+        content: "";
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        margin-left: -15px;
+        border: 15px solid transparent;
+        border-top: 15px solid #70a6ff;
+        z-index: 0;
     }
 </style>
