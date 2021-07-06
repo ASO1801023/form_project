@@ -56,12 +56,12 @@
                         <h2>⬇︎Please select WORD!!⬇︎</h2>
                         <form method="POST">
                             {% csrf_token %}
-                            <input class="balloon1" type="submit" name="button2" value="{{ ruy1 }}"></input>
-                            <input class="balloon1" type="submit" name="button2" value="{{ ruy2 }}"></input>
-                            <input class="balloon1" type="submit" name="button2" value="{{ ruy3 }}"></input>
-                            <input class="balloon1" type="submit" name="button3" value="{{ sir1 }}"></input>
-                            <input class="balloon1" type="submit" name="button3" value="{{ sir2 }}"></input>
-                            <input class="balloon1" type="submit" name="button3" value="{{ sir3 }}"></input>
+                            <input class="balloonRed" type="submit" name="button2" value="{{ ruy1 }}"></input>
+                            <input class="balloonRed" type="submit" name="button2" value="{{ ruy2 }}"></input>
+                            <input class="balloonRed" type="submit" name="button2" value="{{ ruy3 }}"></input>
+                            <input class="balloonBlue" type="submit" name="button3" value="{{ sir1 }}"></input>
+                            <input class="balloonBlue" type="submit" name="button3" value="{{ sir2 }}"></input>
+                            <input class="balloonBlue" type="submit" name="button3" value="{{ sir3 }}"></input>
                         </form>
                         <form method="POST">
                             {% csrf_token %}
@@ -96,14 +96,51 @@
                         <h5>□TEGOSHIRITORIページとは?</h5>
                         <h6>......しりとりを通じて新たなアイデアを生み出すページです。</h6><br>
                     </div>
+                    <hr>
                     <div class="col-sm-12 text-center">
                         <h3>例</h3>
                     </div>
 
                     <div class="row m-5">
-                        <div class="col-sm-5 text-center">
-                            <div class="balloon1"><p>しりとり</p></div><br>
-                            <div class="balloon1"><p>りんご</p></div>
+                        <div class="col-sm-12 text-center">
+                            <div class="card p-4">
+                                <div class="row">
+                                    <div class="col-sm-5 text-center">
+                                        <div class="balloon1"><p>しりとり</p></div><br>
+                                        <div class="balloon1"><p>りんご</p></div>
+                                    </div>
+                                    <div class="col-sm-6 text-center">
+                                        <br><br><h5>しりとりを繰り返して新しい<br>アイデアを模索しよう！</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-sm-12 text-center mt-3">
+                            <div class="card p-3">
+                                <h2>⬇︎Please select WORD!!⬇︎</h2>
+                                <div>
+                                    <div class="balloon1">
+                                        <div>自分で考える！</div>
+                                        <div><input type="text"></input></div>
+                                        <div><button class="btn btn-primary" type="button">送信</button></div>
+                                    </div>
+                                    <div style="color:#DFDBB2">●</div>色の吹き出しに次の単語を入力しよう！
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 text-center mt-3">
+                            <div class="card p-3">
+                                <h4>●単語が思いつかない時は...●</h4>
+                                <div>
+                                    <div class="balloonRed">果物</div>
+                                    <div class="balloonRed">ジョナゴールド</div>
+                                    <div class="balloonBlue">ゴリラ</div>
+                                    <div class="balloonBlue">ゴロツキ</div>
+                                </div>
+                                <div style="color:#F8BBD0">●</div>色の吹き出しは類義語の候補を出してくれる
+                                <div style="color:#BBDEFB">●</div>色の吹き出しはしりとりの候補を出してくれる
+                            </div>
                         </div>
                     </div>
                     
@@ -128,7 +165,37 @@
     background: #BBDEFB;
 }
 .color3{
-    background: #B2DFDB;
+    background: #DFDBB2;
+}
+
+.balloonRed {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 7px 10px;
+    min-width: 120px;
+    max-width: 100%;
+    color: #555;
+    font-size: 16px;
+    background: #F8BBD0;
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.balloonBlue {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 7px 10px;
+    min-width: 120px;
+    max-width: 100%;
+    color: #555;
+    font-size: 16px;
+    background: #BBDEFB;
+    border-radius: 15px;
+
+    text-align: center;
 }
 
 .balloon1 {
@@ -140,7 +207,7 @@
     max-width: 100%;
     color: #555;
     font-size: 16px;
-    background: #e0edff;
+    background: #EFEBB2;
     border-radius: 15px;
 
     text-align: center;
@@ -153,7 +220,7 @@
     left: 50%;
     margin-left: -15px;
     border: 15px solid transparent;
-    border-top: 15px solid #e0edff;
+    border-top: 15px solid #EFEBB2;
 
 }
 

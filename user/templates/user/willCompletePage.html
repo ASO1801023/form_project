@@ -2,11 +2,7 @@
 
 {% block content %}
 
-<h1>しりとりリスト Beta ver2.3</h1>
 <h2>完成します。よろしいですか？</h2>
-<div>
-    {{ ideatree_obj.id }}
-</div>
 <form action="/user/complete/" method="POST">
     {% csrf_token %}
     <div><input type="hidden" name="nowId" value="{{ ideatree_obj.id }}"></input></div>

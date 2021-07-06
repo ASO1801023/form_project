@@ -33,6 +33,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import random
 
+import os
+
 def index(request):
     return render(request, 'user/index.html')
 
@@ -234,7 +236,8 @@ def ruySystem(acc): #類義語システム(江崎作)
 def siritoriSystem(acc): #しりとりシステム(かずなり作)
     retData = [0] * 3
     # しりとりサイド
-    df = pd.read_csv('japanese.csv')
+    file = os.path.abspath("japanese.csv")
+    df = pd.read_csv(file)
 
     # オブジェクトをインスタンス化
     kakasir = kakasi()
@@ -247,7 +250,7 @@ def siritoriSystem(acc): #しりとりシステム(かずなり作)
     secInput = conv.do(acc)  # => ひらがな化
 
     # 入力された文字がcsvになかった場合、文字を追加
-    with open('Japanese.csv', encoding='utf-8') as f:
+    with open(file, encoding='utf-8') as f:
         csvList = csv.reader(f)
         flatList = [item for subList in csvList for item in subList]
 
@@ -255,7 +258,7 @@ def siritoriSystem(acc): #しりとりシステム(かずなり作)
         a = flatList.count(acc)
 
         if a == 0:
-            with open('Japanese.csv', "a", encoding='utf-8') as wf:
+            with open(file, "a", encoding='utf-8') as wf:
                 writer = csv.writer(wf)
                 writer.writerow(list)
     del list
