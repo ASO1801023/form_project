@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import UserForm
+
 from .forms import HikaruForm
 from .forms import IdeaTreeForm
 from django.db.models import Max
@@ -21,7 +21,7 @@ from csv import reader
 import codecs
 # hikaruSys end
 
-from user.models import Publisher
+
 from user.models import IdeaTree
 from user.models import Element
 
@@ -33,15 +33,26 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import random
 
+#login
+from django.urls import reverse_lazy
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import (
+     get_user_model, logout as auth_logout,
+)
+from .forms import UserCreateForm
+
+User = get_user_model()
+
 def index(request):
     return render(request, 'user/index.html')
 
 #一覧画面処理
 def list(request):
     #ログインしているuserを取得する処理
-        
-    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0) #未完成ideaTreeを取得 (, user=1)
-    ideatree_comp = IdeaTree.objects.filter(complete_flag=1) #未完成ideaTreeを取得
+    cre = request.user.id
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0,user_id=cre) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1,user_id=cre) #未完成ideaTreeを取得
 
     ideatree_form = IdeaTreeForm()
 
@@ -56,9 +67,10 @@ def list_2(request):
     params = {'c':''}
     newTheme = request.POST['newTheme']
     code = random.randrange(10**5,10**6)
+    cre = request.user.id
     #一覧画面から
     if 'newButton' in request.POST:
-        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id="1", passcode=code).save()
+        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id=cre, passcode=code).save()
         a = IdeaTree.objects.filter().count()
         b = IdeaTree.objects.filter()
         c = b[a-1].id
@@ -337,3 +349,29 @@ def search(request):
         params['element_s'] = Element.objects.filter(ideatree_id=ideatree_obj['id'])
 
     return render(request, 'user/search.html', params)
+
+
+class Top(generic.TemplateView):
+    template_name = 'top.html'
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreateForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'
+
+class ProfileView(LoginRequiredMixin, generic.View):
+
+    def get(self, *args, **kwargs):
+        return render(self.request,'registration/profile.html')
+
+
+class DeleteView(LoginRequiredMixin, generic.View):
+
+    def get(self, *args, **kwargs):
+        user = User.objects.get(email=self.request.user.email)
+        user.is_active = False
+        user.save()
+        auth_logout(self.request)
+        return render(self.request,'registration/delete_complete.html')
+
