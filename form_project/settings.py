@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+<<<<<<< HEAD
+=======
+    'bootstrap4',
+>>>>>>> 330e93009355f3c04ffa41f15dd14e94b512931e
 ]
 
 MIDDLEWARE = [
@@ -82,10 +86,17 @@ WSGI_APPLICATION = 'form_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
         'NAME': 'tegoshiDB',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
+=======
+        'NAME': 'tegoshiDB3',
+        'USER': 'Hisano',
+        'PASSWORD': 'hisano316',
+        'HOST': '192.168.64.2',
+>>>>>>> 330e93009355f3c04ffa41f15dd14e94b512931e
         'PORT': '3306',
     }
 }
@@ -120,7 +131,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
+<<<<<<< HEAD
 LANGUAGE_CODE = 'en-us'
+=======
+LANGUAGE_CODE = 'ja'
+>>>>>>> 330e93009355f3c04ffa41f15dd14e94b512931e
 
 TIME_ZONE = 'UTC'
 
@@ -140,3 +155,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+<<<<<<< HEAD
+=======
+AUTH_USER_MODEL = 'user.User'
+LOGIN_REDIRECT_URL = '/user/list/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+>>>>>>> 330e93009355f3c04ffa41f15dd14e94b512931e
