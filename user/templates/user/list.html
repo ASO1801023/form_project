@@ -5,15 +5,16 @@
 <h1>しりとり Beta ver2.3</h1>
 <div>
     <table>
-
         <tr>
             <th>新規作成</th>
             <td>
                 <form action="/user/list_2/" method="POST">
                     {% csrf_token %}
                     <div>
-                        <input type="textbox" name="newTheme" placeholder="テーマ"></input>
-                        <input type="submit" name="newButton" value="新規作成"></input>
+                        <p class="box">
+                            <input type="textbox" name="newTheme" placeholder="テーマ"></input>
+                            <input type="submit" name="newButton" class="btn-flat-border" value="+"></input>
+                        </p>
                     </div>
                 </form>
             </td>
@@ -23,9 +24,11 @@
             <th>未完成</th>
             {% for incomplete in ideatree_incomp %}
             <td>
-                <a href="/user/hikaruPath/?ideatreeid={{ incomplete.id }}">
-                    <input type="button" name="dummy" value="{{ incomplete.name }}"></input>
-                </a>
+                <p class="box">
+                    <a href="/user/hikaruPath/?ideatreeid={{ incomplete.id }}" class="btn-flat-border">
+                        {{ incomplete.name }}
+                    </a>
+                </p>
             </td>
             {% endfor %}
         </tr>
@@ -34,9 +37,11 @@
             <th>完成</th>
             {% for complete in ideatree_comp %}
             <td>
-                <a href="/user/completed/?ideatreeid={{ complete.id }}">
-                    <input type="button" name="dummy" value="{{ complete.name }}"></input>
-                </a>
+                <p class="box">
+                    <a href="/user/completed/?ideatreeid={{ complete.id }}" class="btn-flat-border">
+                        {{ complete.name }}
+                    </a>
+                </p>
             </td>
             {% endfor %}
         </tr>

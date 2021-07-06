@@ -5,7 +5,6 @@
 <head>
 
     <meta charset="utf-8" />
-     <link rel="stylesheet" type="text/css" href="{% static 'hello/hikaru.css' %}">
     <title>しりとり Beta ver2.3</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -112,5 +111,24 @@
         border: 15px solid transparent;
         border-top: 15px solid #70a6ff;
         z-index: 0;
+    }
+    .btn-flat-border {
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: #67c5ff;
+    border: solid 2px #67c5ff;
+    border-radius: 3px;
+    transition: .4s;
+    margin       : 0.5em;
+    width        : 100px;
+    height       : 100px;
+    }
+    .btn-flat-border:hover {
+    background: #67c5ff;
+    color: white;
+    }
+    p.box {
+    border-bottom: 1px dashed red;
     }
 </style>
