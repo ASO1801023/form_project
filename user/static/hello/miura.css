@@ -20,6 +20,11 @@ body{
     background-size: cover;
     /* 背景画像が読み込まれる前に表示される背景のカラー */
     background-color: #464646;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 .btn-circle-fishy {
     display: inline-block;
@@ -68,4 +73,48 @@ body{
     width: 150px;
     height: 150px;
     position:static;
+    text-align: center;
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+.title {
+  overflow: hidden;
+  transform: translate(-100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+  color: #aa8f7b;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.title span {
+  display: block;
+  transform: translate(100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+}
+
+.title.-visible,
+.title.-visible span {
+  transform: translate(0, 0);
+}
+
+.sentence {
+  overflow: hidden;
+  transform: translate(-100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+  font-family: "Yu Gothic Medium";
+  font-size: 16px;
+  text-align: center;
+}
+
+.sentence span {
+  display: block;
+  transform: translate(100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+}
+
+.sentence.-visible,
+.sentence.-visible span {
+  transform: translate(0, 0);
 }

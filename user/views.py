@@ -311,7 +311,9 @@ def search(request):
         #randomボタンが押された時
         elif 'random' in request.POST:
             #aaaTreeID = IdeaTree.objects.filter(passcode__gte='0')
+            #ideatreeを全て取得
             aaaTreeID = IdeaTree.objects.all()
+            #ideatreeの数を数える
             TreeIDcount = IdeaTree.objects.all().count()
             num = random.randint(0,TreeIDcount)
             if num>=1:
@@ -323,7 +325,47 @@ def search(request):
             elem_lastnum = int(len(element_s)) # 葉っぱの数 == 最後の数字
 
             params['form'] = HikaruForm()
+        
+        elif 'random2' in request.POST:
+            return render(request, 'user/random.html', params)
+
+
 
         params['element_s'] = Element.objects.filter(ideatree_id=ideatree_obj['id'])
 
     return render(request, 'user/search.html', params)
+
+def random(request):
+    #ideatreeを全て取得
+    ideatree_obj = IdeaTree.objects.all()
+    #ideatreeの数を数える
+    TreeIDcount = IdeaTree.objects.all().count()
+    num1 = random.randint(0,TreeIDcount)
+    if num1>=1:
+        num1=num1-1
+    num2 = random.randint(0,TreeIDcount)
+    if num2>=1:
+        num2=num2-1
+    num3 = random.randint(0,TreeIDcount)
+    if num3>=1:
+        num3=num3-1
+    num4 = random.randint(0,TreeIDcount)
+    if num4>=1:
+        num4=num4-1
+
+    #complete_flagが１のideatreeを取得
+    params['comp_count'] = IdeaTree.objects.filter(complete_flag=1)
+    cnt = len(params['comp_count'])
+    if(cnt<4):
+        str = ['ideatree1','ideatree2','ideatree3','ideatree4']
+        for n in str:
+            params[n] = IdeaTree.objects.all()
+
+    else:
+        params['ideatree1'] = getIdeaTree[num1]
+        params['ideatree2'] = getIdeaTree[num2]
+        params['ideatree3'] = getIdeaTree[num3]
+        params['ideatree4'] = getIdeaTree[num4]
+
+    return render(request, 'user/random.html', params)
+
