@@ -12,5 +12,5 @@ urlpatterns = [
     path('complete/', views.completeSys, name='complete'),
     path('list_2/', views.list_2, name="list_2"),
     path('completed/', views.completed, name="completed"),
-    path('random/', views.random, name="completed"),
+    path('random/', views.randomshow, name="completed"),
 ]

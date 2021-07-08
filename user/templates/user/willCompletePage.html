@@ -9,6 +9,7 @@
     <div><input type="textbox" name="newName" value="{{ ideatree_obj.name }}"></input></div>
     <div><input type="textbox" name="newOverView" value="{{ ideatree_obj.overview }}"></input></div>
     <div><input type="submit" name="completeButton" value="完成"></input></div>
+    <div><input type="submit" name="deleteButton" value="削除"></input></div>
 </form>
 <a href="/user/complete/?ideatreeid={{ ideatree_obj.id }}">
     {{ ideatree_obj.id }}完成確定

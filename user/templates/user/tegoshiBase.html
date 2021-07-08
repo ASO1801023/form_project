@@ -72,7 +72,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
-    @yield("script")
     </div>
 </body>
 <footer class="text-white text-center color-black py-2" style="background-color:#551033; bottom:0; position:fixed; width:100%; margin:0px;">
@@ -83,6 +82,8 @@
 
 
 <style>
+    @import url(https://fonts.googleapis.com/css?family=Indie+Flower);
+
     html{
         text-align:center;
     }
@@ -112,5 +113,42 @@
         border: 15px solid transparent;
         border-top: 15px solid #70a6ff;
         z-index: 0;
+    }
+    .btn-flat-dashed-filled {
+        display: inline-block;
+        padding: 0.5em 1em;
+        text-decoration: none;
+        color: royalblue;
+        border: dashed 1px royalblue;
+        background: #f2fcff;
+        border-radius: 3px;
+        transition: .4s;
+        margin       : 0.5em;
+        width        : 100px;
+        height       : 100px;
+    }
+    .btn-flat-dashed-filled:hover {
+        background: royalblue;
+        color: #FFF;
+    }
+    p.box {
+        border-bottom: 1px dashed red;
+    }
+    h1 {
+        margin: 50px 0;
+        color: #fff;
+        font-family: 'Indie Flower', cursive;
+        font-size: 48px;
+        font-weight: normal;
+        text-align: center;
+    }
+    th {
+        color: black;
+        font-family: 'Indie Flower', cursive;
+    }
+    tr {
+        min-height: 694px;
+        min-width: 874px;
+        overflow: scroll;
     }
 </style>
