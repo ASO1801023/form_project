@@ -6,11 +6,10 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('new/', views.new, name='new'),
     path('hikaruPath/', views.hikaruSys, name='hikarusSystem'),
-    path('search/', views.search, name='search'),
+    path('search/', views.randomshow, name='search'),
     path('list/', views.list, name='list'),
     path('willCompleteQ/', views.willComplete, name='willComplete'),
     path('complete/', views.completeSys, name='complete'),
     path('list_2/', views.list_2, name="list_2"),
     path('completed/', views.completed, name="completed"),
-    path('random/', views.random, name="completed"),
 ]

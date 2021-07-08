@@ -309,9 +309,12 @@ def new(request):
     params = {'message': 'newです'}
     return render(request, 'user/new.html', params)
 
+
+#使ってない（旧randomsearch）
 def search(request):
     params = {'ans': '', 'form': None}
     if request.method == 'POST':
+        
         #送信ボタンが押された時
         if 'set' in request.POST:
             TreeID = IdeaTree.objects.filter(passcode=request.POST['treeID'])
@@ -348,37 +351,25 @@ def search(request):
 
     return render(request, 'user/search.html', params)
 
-def random(request):
-    #ideatreeを全て取得
-    ideatree_obj = IdeaTree.objects.all()
-    #ideatreeの数を数える
-    TreeIDcount = IdeaTree.objects.all().count()
-    num1 = random.randint(0,TreeIDcount)
-    if num1>=1:
-        num1=num1-1
-    num2 = random.randint(0,TreeIDcount)
-    if num2>=1:
-        num2=num2-1
-    num3 = random.randint(0,TreeIDcount)
-    if num3>=1:
-        num3=num3-1
-    num4 = random.randint(0,TreeIDcount)
-    if num4>=1:
-        num4=num4-1
+def randomshow(request):
+    params = {'ans': '', 'form': None}
 
     #complete_flagが１のideatreeを取得
     params['comp_count'] = IdeaTree.objects.filter(complete_flag=1)
     cnt = len(params['comp_count'])
-    if(cnt<4):
-        str = ['ideatree1','ideatree2','ideatree3','ideatree4']
-        for n in str:
-            params[n] = IdeaTree.objects.all()
+    rannum = random.randint(0,cnt-5)
 
-    else:
-        params['ideatree1'] = getIdeaTree[num1]
-        params['ideatree2'] = getIdeaTree[num2]
-        params['ideatree3'] = getIdeaTree[num3]
-        params['ideatree4'] = getIdeaTree[num4]
+    params['ideatree1'] = params['comp_count'][rannum]
+    params['ideatree2'] = params['comp_count'][rannum+1]
+    params['ideatree3'] = params['comp_count'][rannum+2]
+    params['ideatree4'] = params['comp_count'][rannum+3]
 
-    return render(request, 'user/random.html', params)
+    params['ideatree_search'] = params['comp_count'][0]
+
+    #送信ボタンが押された時
+    if 'set' in request.POST:
+        params['ideatree_search'] = IdeaTree.objects.filter(id=1)
+        params['ideatree_search'] = params['ideatree_search'][0]
+
+    return render(request, 'user/search.html', params)
 
