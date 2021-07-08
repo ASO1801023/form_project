@@ -1,0 +1,37 @@
+{% extends 'user/tegoshiBase.html' %}
+
+{% block content %}
+
+<div style="margin:0 5%;">
+    <div class="row pt-5">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="card text-center pt-5 pr-5 pl-5 pb-4">
+                <form action="/user/delete/" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <div class="col-sm-12 pb-4">
+                            <h4>このテーマを削除します。よろしいですか？</h4>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <h6>テーマ</h6>
+                            <h5>{{ ideatree_obj.idea_theme }}</h5>
+                        </div>
+                    
+                        <div><input type="hidden" name="nowId" value="{{ ideatree_obj.id }}"></input></div>
+
+                        <div class="col-sm-12 text-center pt-4 pr-5 pl-5">
+                            <div><input type="submit" class="btn btn-danger" name="deleteButton" value="削除"></input></div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</div>
+
+
+{% endblock %}

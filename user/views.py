@@ -299,6 +299,39 @@ def willComplete(request):
 
 def completeSys(request): 
     nowId = request.POST['nowId']
+    newName = request.POST['newName'] # テキストボックスから入手
+    newOverView = request.POST['newOverView'] # テキストボックスから入手
+
+    ideatree_obj = IdeaTree.objects.filter(id=nowId)
+    IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
+
+    return render(request, 'user/list.html')
+
+def willDelete(request):
+    params = {'ans': '', 'form': None}
+    # urlからidを取得 start
+    now_urlid = 0
+    if 'ideatreeid' in request.GET:
+        now_urlid = request.GET['ideatreeid']
+    # urlからidを取得 end
+
+    ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
+    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid) # Elmentを全取得
+
+    params['ideatree_obj'] = ideatree_obj
+    return render(request, 'user/willDeletePage.html', params)
+
+def deleteSys(request): 
+    nowId = request.POST['nowId']
+    
+    IdeaTree.objects.filter(id=nowId).delete()
+    Element.objects.filter(ideatree_id=nowId).delete()
+
+    return render(request, 'user/list.html')
+
+
+def completeSys22222222(request): 
+    nowId = request.POST['nowId']
 
     #完成ボタン押下時、登録処理を行う
     if 'completeButton' in request.POST:

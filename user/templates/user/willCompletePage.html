@@ -2,17 +2,57 @@
 
 {% block content %}
 
-<h2>完成します。よろしいですか？</h2>
-<form action="/user/complete/" method="POST">
-    {% csrf_token %}
-    <div><input type="hidden" name="nowId" value="{{ ideatree_obj.id }}"></input></div>
-    <div><input type="textbox" name="newName" value="{{ ideatree_obj.name }}"></input></div>
-    <div><input type="textbox" name="newOverView" value="{{ ideatree_obj.overview }}"></input></div>
-    <div><input type="submit" name="completeButton" value="完成"></input></div>
-    <div><input type="submit" name="deleteButton" value="削除"></input></div>
-</form>
-<a href="/user/complete/?ideatreeid={{ ideatree_obj.id }}">
-    {{ ideatree_obj.id }}完成確定
-</a>
+<div style="margin:0 5%;">
+    <div class="row pt-5">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="card text-center pt-5 pr-5 pl-5 pb-4">
+                <form action="/user/complete/" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12 pb-4">
+                            <h4>完成します。よろしいですか？</h4>
+                        </div>
+                        <div class="col-sm-5 text-center">
+                            <h6>テーマ</h6>
+                            <h5>{{ ideatree_obj.idea_theme }}</h5>
+                        </div>
+                        <div class="col-sm-2 text-center">
+                            <h6>×</h6>
+                            <h5>×</h5>
+                        </div>
+                        <div class="col-sm-5 text-center">
+                            <h6>ゴールの単語</h6>
+                            <h5>{{ element_s_lastWord }}</h5>
+                        </div>
+                    
+                        <div><input type="hidden" name="nowId" value="{{ ideatree_obj.id }}"></input></div>
+
+                            <div class="col-sm-12 text-center pt-5 pr-5 pl-5">
+                                <!-- <div><input type="textbox" name="newName" value="{{ ideatree_obj.name }}"></input></div> -->
+                                <div class="md-form">
+                                    <input type="text" id="form1" name="newName" size="15" maxlength="20" class="form-control" value="{{ ideatree_obj.name }}">
+                                    <label for="form1">タイトル</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 pr-5 pl-5">
+                                <!-- <div><input type="textarea" name="newOverView" value="{{ ideatree_obj.overview }}"></input></div> -->
+                                <div class="md-form amber-textarea active-amber-textarea-2">
+                                    <textarea id="form2" name="newOverView" class="md-textarea form-control" rows="3" maxlength="100">{{ ideatree_obj.overview }}</textarea>
+                                    <label for="form2">説明</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div><input type="submit" class="btn btn-primary" name="completeButton" value="完成"></input></div>
+                            </div>
+                    
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</div>
+
 
 {% endblock %}
