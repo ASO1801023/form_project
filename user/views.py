@@ -318,7 +318,19 @@ def completeSys(request):
     ideatree_obj = IdeaTree.objects.filter(id=nowId)
     IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
 
-    return render(request, 'user/list.html')
+    # リストに戻る処理
+    # ログインしているuserを取得する処理
+    cre = request.user.id
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0,user_id=cre) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1,user_id=cre) #未完成ideaTreeを取得
+    ideatree_form = IdeaTreeForm()
+
+    context = {
+        'ideatree_incomp' : ideatree_incomp,
+        'ideatree_comp' : ideatree_comp,
+        'ideatree_form' : ideatree_form,
+    }
+    return render(request, 'user/list.html', context)
 
 def willDelete(request):
     params = {'ans': '', 'form': None}
@@ -340,7 +352,19 @@ def deleteSys(request):
     IdeaTree.objects.filter(id=nowId).delete()
     Element.objects.filter(ideatree_id=nowId).delete()
 
-    return render(request, 'user/list.html')
+    # リストに戻る処理
+    # ログインしているuserを取得する処理
+    cre = request.user.id
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0,user_id=cre) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1,user_id=cre) #未完成ideaTreeを取得
+    ideatree_form = IdeaTreeForm()
+
+    context = {
+        'ideatree_incomp' : ideatree_incomp,
+        'ideatree_comp' : ideatree_comp,
+        'ideatree_form' : ideatree_form,
+    }
+    return render(request, 'user/list.html', context)
 
 
 # 初期(使わない)
