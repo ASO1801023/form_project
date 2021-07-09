@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import UserForm
+
 from .forms import HikaruForm
 from .forms import IdeaTreeForm
 from django.db.models import Max
@@ -21,7 +21,7 @@ from csv import reader
 import codecs
 # hikaruSys end
 
-from user.models import Publisher
+
 from user.models import IdeaTree
 from user.models import Element
 
@@ -34,6 +34,17 @@ from django.http import HttpResponse
 import random
 
 import os
+#login
+from django.urls import reverse_lazy
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import (
+     get_user_model, logout as auth_logout,
+)
+from .forms import UserCreateForm
+
+User = get_user_model()
+
 
 def index(request):
     return render(request, 'user/index.html')
@@ -41,10 +52,9 @@ def index(request):
 #一覧画面処理
 def list(request):
     #ログインしているuserを取得する処理
-        
-    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0) #未完成ideaTreeを取得 (, user=1)
-    ideatree_comp = IdeaTree.objects.filter(complete_flag=1) #未完成ideaTreeを取得
-
+    cre = request.user.id
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0,user_id=cre) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1,user_id=cre) #未完成ideaTreeを取得
     ideatree_form = IdeaTreeForm()
 
     context = {
@@ -58,9 +68,10 @@ def list_2(request):
     params = {'c':''}
     newTheme = request.POST['newTheme']
     code = random.randrange(10**5,10**6)
+    cre = request.user.id
     #一覧画面から
     if 'newButton' in request.POST:
-        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id="1", passcode=code).save()
+        IdeaTree(name="新しいプロジェクト", overview="概要", complete_flag="0", idea_theme=newTheme, lastidea_id="0", user_id=cre, passcode=code).save()
         a = IdeaTree.objects.filter().count()
         b = IdeaTree.objects.filter()
         c = b[a-1].id
@@ -70,6 +81,7 @@ def list_2(request):
 
 
 def completed(request):
+    cre = request.user.id
     # urlからidを取得 start
     now_urlid = 0
     if 'ideatreeid' in request.GET:
@@ -235,6 +247,7 @@ def ruySystem(acc): #類義語システム(江崎作)
 
 def siritoriSystem(acc): #しりとりシステム(かずなり作)
     retData = [0] * 3
+
     # しりとりサイド
     file = os.path.abspath("japanese.csv")
     df = pd.read_csv(file)
@@ -247,7 +260,11 @@ def siritoriSystem(acc): #しりとりシステム(かずなり作)
     kakasir.setMode('K', 'H')
     # 変換して出力
     conv = kakasir.getConverter()
-    secInput = conv.do(acc)  # => ひらがな化
+    accc = conv.do(acc)  # => ひらがな化
+
+    # ひらがな小文字を大文字にする
+    moji = str.maketrans("ぁぃぅぇぉゃゅょ","あいうえおやゆよ")
+    secInput = accc.translate(moji)
 
     # 入力された文字がcsvになかった場合、文字を追加
     with open(file, encoding='utf-8') as f:
@@ -287,9 +304,10 @@ def willComplete(request):
     # urlからidを取得 end
 
     ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
-    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid) # Elmentを全取得
+    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid).order_by('id').reverse() # Elmentを全取得
 
     params['ideatree_obj'] = ideatree_obj
+    params['element_s_lastWord'] = params['element_s'][0].name
     return render(request, 'user/willCompletePage.html', params)
 
 def completeSys(request): 
@@ -300,7 +318,29 @@ def completeSys(request):
     ideatree_obj = IdeaTree.objects.filter(id=nowId)
     IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
 
-    return render(request, 'user/completePage.html')
+    return render(request, 'user/list.html')
+
+def willDelete(request):
+    params = {'ans': '', 'form': None}
+    # urlからidを取得 start
+    now_urlid = 0
+    if 'ideatreeid' in request.GET:
+        now_urlid = request.GET['ideatreeid']
+    # urlからidを取得 end
+
+    ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
+    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid) # Elmentを全取得
+
+    params['ideatree_obj'] = ideatree_obj
+    return render(request, 'user/willDeletePage.html', params)
+
+def deleteSys(request): 
+    nowId = request.POST['nowId']
+    
+    IdeaTree.objects.filter(id=nowId).delete()
+    Element.objects.filter(ideatree_id=nowId).delete()
+
+    return render(request, 'user/list.html')
 
 
 # 初期(使わない)
@@ -352,7 +392,26 @@ def search(request):
     return render(request, 'user/search.html', params)
 
 def randomshow(request):
+<<<<<<< HEAD
     params = {'ans': '', 'form': None}
+=======
+    #ideatreeを全て取得
+    ideatree_obj = IdeaTree.objects.all()
+    #ideatreeの数を数える
+    TreeIDcount = IdeaTree.objects.all().count()
+    num1 = random.randint(0,TreeIDcount)
+    if num1>=1:
+        num1=num1-1
+    num2 = random.randint(0,TreeIDcount)
+    if num2>=1:
+        num2=num2-1
+    num3 = random.randint(0,TreeIDcount)
+    if num3>=1:
+        num3=num3-1
+    num4 = random.randint(0,TreeIDcount)
+    if num4>=1:
+        num4=num4-1
+>>>>>>> 917aea70ea6e738f9fb7a444ddc1821c9af0b0a3
 
     #complete_flagが１のideatreeを取得
     params['comp_count'] = IdeaTree.objects.filter(complete_flag=1)
@@ -373,3 +432,29 @@ def randomshow(request):
 
     return render(request, 'user/search.html', params)
 
+
+
+class Top(generic.TemplateView):
+    template_name = 'top.html'
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreateForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'
+
+
+class ProfileView(LoginRequiredMixin, generic.View):
+
+    def get(self, *args, **kwargs):
+        return render(self.request,'registration/profile.html')
+
+
+class DeleteView(LoginRequiredMixin, generic.View):
+
+    def get(self, *args, **kwargs):
+        user = User.objects.get(email=self.request.user.email)
+        user.is_active = False
+        user.save()
+        auth_logout(self.request)
+        return render(self.request,'registration/delete_complete.html')

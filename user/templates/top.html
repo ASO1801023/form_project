@@ -10,8 +10,23 @@
     <title>アイデアしりとり</title>
 </head>
 <body>
-    <div class="button_wrapper2">
-        <a href="/user/hikaruPath/?ideatreeid={{c}}" class="btn-horizontal-border">Push To Start</a>
+    <div class="text">
+        <h1>Idea Shiritori</h1>
     </div>
+
+    {% if user.is_authenticated %}
+    <div class="button_wrapper">
+        <a href="/user/list" class="btn-circle-fishy mt-5">start</a>
+    </div>
+    {% else %}
+    <div class="button_wrapper">
+        <a class="btn-circle-fishy mt-5" href="{% url 'login' %}">login</a>
+        <a class="btn-circle-fishy mt-5" href="{% url 'signup' %}">sing up</a>
+    </div>
+    {% endif %}
+    <div class="button_wrapper">
+        <a href="/user/search" class="btn-circle-fishy2">look</a>
+    </div>
+    
 </body>
 </html>
