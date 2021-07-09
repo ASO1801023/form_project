@@ -304,9 +304,10 @@ def willComplete(request):
     # urlからidを取得 end
 
     ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
-    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid) # Elmentを全取得
+    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid).order_by('id').reverse() # Elmentを全取得
 
     params['ideatree_obj'] = ideatree_obj
+    params['element_s_lastWord'] = params['element_s'][0].name
     return render(request, 'user/willCompletePage.html', params)
 
 def completeSys(request): 
@@ -341,24 +342,6 @@ def deleteSys(request):
 
     return render(request, 'user/list.html')
 
-
-def completeSys22222222(request): 
-    nowId = request.POST['nowId']
-
-    #完成ボタン押下時、登録処理を行う
-    if 'completeButton' in request.POST:
-        newName = request.POST['newName'] # テキストボックスから入手
-        newOverView = request.POST['newOverView'] # テキストボックスから入手
-
-        ideatree_obj = IdeaTree.objects.filter(id=nowId)
-        IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
-
-    #削除ボタン押下時、削除処理を実行する
-    if 'deleteButton' in request.POST:
-        IdeaTree.objects.filter(id=nowId).delete()
-        Element.objects.filter(ideatree_id=nowId).delete()
-
-    return render(request, 'user/completePage.html')
 
 # 初期(使わない)
 
