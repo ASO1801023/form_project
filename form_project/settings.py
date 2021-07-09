@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'form_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tegoshiDB4',
-        'USER': 'Hisano',
-        'PASSWORD': 'hisano316',
-        'HOST': '192.168.64.2',
+        'NAME': 'tegoshiDB',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }

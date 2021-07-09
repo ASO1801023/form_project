@@ -6,7 +6,7 @@
 
 <h1>List</h1>
 <div>
-    <table overflow: scroll;>
+    <table>
         <tr>
             <th>Create New</th>
             <td>
@@ -24,7 +24,7 @@
             <td>
                 <p class="box">
                     <a href="/user/hikaruPath/?ideatreeid={{ incomplete.id }}" class="btn-flat-dashed-filled">
-                        {{ incomplete.name }}
+                        {{ incomplete.idea_theme }}
                     </a>
                 </p>
             </td>
@@ -47,7 +47,7 @@
     </table>
 </div>
 
-<!-- ヘルプポップアップ -->
+<!--　新規作成時ポップアップ -->
 <div class="modal fade right" id="helpPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -70,7 +70,7 @@
       </div>
     </div>
   </div>
-  <!-- ヘルプポップアップ -->
+  <!-- 新規作成時ポップアップ -->
 
 </form>
 {% endblock %}
