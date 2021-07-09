@@ -1,0 +1,247 @@
+{% extends 'user/tegoshiBase.html' %}
+
+{% block content %}
+
+<div style="margin:0 5%;">
+    <div class="row pt-4">
+
+        <div class="col-sm-4">
+            <div class="card p-4" style="background-color: #FDCBE0;">
+                <div class="card p-4 mb-2" style="background-color: #FFEBF0;">
+                    <h5>テーマ : {{ ideatree_obj.idea_theme }}</h5>
+                    <h2> {{ ideatree_obj.name }}</h2>
+                </div>
+                <hr>
+                <h5>作成者:{{ ideatree_obj.user_name }}</h5>
+                <h6>単語数:<b>{{ element_len }}</b>個  閲覧コード : {{ ideatree_obj.passcode }}</h6>
+                <br>
+                <h6><b>概要 : </b></h6>
+                <h6>{{ ideatree_obj.overview }}</h6><br>
+            </div>
+        </div>
+
+        <div class="col-sm-8" style="width:100%; height:650px; overflow:auto;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card p-4">
+                        <div class="row">
+                            <div class="col-sm-12 pl-3">
+                                <i class="fa fa-1x fa-question-circle-o text-primary waves-effect" aria-hidden="true" data-toggle="modal" data-target="#helpPop">help</i>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <h1>
+                                    TEGOSHIRITORI
+                                </h1>
+                                <hr>
+                            </div>
+                            
+                            <div class="col-sm-12 text-center">⬇︎START!!⬇︎</div>
+                            {% for element in element_s %}
+                            <div class="col-sm-12 text-center">
+                                <div class="balloon1">
+                                    <p>{{ element.name }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+        
+                            <div class="col-sm-12 text-center">
+                                <hr>
+                                <h2>★GOAL!!★</h2>
+                                
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ヘルプポップアップ -->
+<div class="modal fade right" id="helpPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalPreviewLabel"><i class="fa fa-question-circle-o" aria-hidden="true"></i> HELP</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5>□このページはTEGOSHIRITORIの完成ページです！</h5>
+                        <h6>......他の人のアイデアを覗き見して、アイデアを吸収しよう！<br>パクリは決して悪いことではないのです！</h6><br>
+                    </div>
+                    <hr>
+                    <div class="col-sm-12 text-center">
+                        <h3>TEGOSHIRITORIのやり方</h3>
+                    </div>
+
+                    <div class="row m-5">
+                        <div class="col-sm-12 text-center">
+                            <div class="card p-4">
+                                <div class="row">
+                                    <div class="col-sm-5 text-center">
+                                        <div class="balloon1"><p>しりとり</p></div><br>
+                                        <div class="balloon1"><p>りんご</p></div>
+                                    </div>
+                                    <div class="col-sm-6 text-center">
+                                        <br><br><h5>しりとりを繰り返して新しい<br>アイデアを模索しよう！</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-sm-12 text-center mt-3">
+                            <div class="card p-3">
+                                <h2>⬇︎Please select WORD!!⬇︎</h2>
+                                <div>
+                                    <div class="balloon1">
+                                        <div>自分で考える！</div>
+                                        <div><input type="text"></input></div>
+                                        <div><button class="btn btn-primary" type="button">送信</button></div>
+                                    </div>
+                                    <div style="color:#DFDBB2">●</div>色の吹き出しに次の単語を入力しよう！
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 text-center mt-3">
+                            <div class="card p-3">
+                                <h4>●単語が思いつかない時は...●</h4>
+                                <div>
+                                    <div class="balloonRed">果物</div>
+                                    <div class="balloonRed">ジョナゴールド</div>
+                                    <div class="balloonBlue">ゴリラ</div>
+                                    <div class="balloonBlue">ゴロツキ</div>
+                                </div>
+                                <div style="color:#F8BBD0">●</div>色の吹き出しは類義語の候補を出してくれる
+                                <div style="color:#BBDEFB">●</div>色の吹き出しはしりとりの候補を出してくれる
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ヘルプポップアップ -->
+
+<style>
+.color0{
+    background: #D0D0D0;
+}
+.color1{
+    background: #F8BBD0;
+}
+.color2{
+    background: #BBDEFB;
+}
+.color3{
+    background: #DFDBB2;
+}
+
+.balloonRed {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 7px 10px;
+    min-width: 120px;
+    max-width: 100%;
+    color: #555;
+    font-size: 16px;
+    background: #F8BBD0;
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.balloonBlue {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 7px 10px;
+    min-width: 120px;
+    max-width: 100%;
+    color: #555;
+    font-size: 16px;
+    background: #BBDEFB;
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.balloon1 {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 7px 10px;
+    min-width: 120px;
+    max-width: 100%;
+    color: #555;
+    font-size: 16px;
+    background: #EFEBB2;
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.balloon1:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -15px;
+    border: 15px solid transparent;
+    border-top: 15px solid #EFEBB2;
+
+}
+
+.balloon1 p {
+    margin: 0;
+    padding: 0;
+}
+
+.feeling1 {
+  position: relative;
+  margin: 2em 0 2em 40px;
+  padding: 15px;
+  background: #fff0c6;
+  border-radius: 30px;
+}
+
+.feeling1:before {  
+  content: "";
+  position: absolute;
+  left: -38px;
+  width: 13px;
+  height: 12px;
+  bottom: 0;
+  background: #fff0c6;
+  border-radius: 50%;
+}
+
+.feeling1:after {
+  content: "";
+  position: absolute;
+  left: -24px;
+  width: 20px;
+  height: 18px;
+  bottom: 3px;
+  background: #fff0c6;
+  border-radius: 50%;
+}
+.feeling1 p {
+  margin: 0; 
+  padding: 0;
+}
+
+</style>
+
+{% endblock %}
