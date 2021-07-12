@@ -4,6 +4,18 @@
 
     <table class="table borderless">
         <tbody>
+            <form action="" method="POST">
+                <button type="submit" class="btn btn-primary">変更する</button>
+                {% csrf_token %}
+            </form>
+        
+
+
+        <tr>
+            <th scope="row">username</th>
+            <td>{{ user.username }}</td>
+        </tr>
+            
         <tr>
             <th scope="row">E-mail</th>
             <td>{{ user.email }}</td>

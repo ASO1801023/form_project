@@ -36,6 +36,12 @@ class UserManager(UserManager):
 class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        unique=False,
+        default='Noname'
+    )
 
     is_staff = models.BooleanField(
         _('staff status'),
