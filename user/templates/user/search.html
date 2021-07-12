@@ -7,27 +7,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="miura.css">
     <meta charset="utf-8" />
-    <script>
-        const CLASSNAME = "-visible";
-        const TIMEOUT = 1500;
-        const DELAY = 100;
-        const $target1 = $(".title");
-        const $target2 = $(".sentence");
-        
-        setInterval(() => {
-            $target1.addClass(CLASSNAME);
-        setTimeout(() => {
-            $target2.addClass(CLASSNAME);
-        }, DELAY);
-        
-        setTimeout(() => {
-            $target1.removeClass(CLASSNAME);
-        setTimeout(() => {
-            $target2.removeClass(CLASSNAME);
-        }, DELAY);
-        }, TIMEOUT);
-        }, TIMEOUT * 2);
-        </script>
     <title>ツリー検索</title>
 </head>
 <body>
@@ -82,6 +61,10 @@
                     <input class="btn btn-primary" type="button" name="random" value="{{ ideatree4.name }}"></input>
                 </a>
                 <p>上の４つはランダムで表示しています</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input class="btn btn-primary" type="submit" name="re_random" value="再度ランダムに表示する">
+                </form>
             </div>
         </div>
     </div>

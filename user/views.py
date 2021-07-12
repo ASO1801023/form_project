@@ -417,19 +417,60 @@ def randomshow(request):
     #complete_flagが１のideatreeを取得
     params['comp_count'] = IdeaTree.objects.filter(complete_flag=1)
     cnt = len(params['comp_count'])
-    rannum = random.randint(0,cnt-5)
+    rannum1 = random.randint(0,cnt-1)
+    rannum2 = random.randint(0,cnt-1)
+    rannum3 = random.randint(0,cnt-1)
+    rannum4 = random.randint(0,cnt-1)
 
-    params['ideatree1'] = params['comp_count'][rannum]
-    params['ideatree2'] = params['comp_count'][rannum+1]
-    params['ideatree3'] = params['comp_count'][rannum+2]
-    params['ideatree4'] = params['comp_count'][rannum+3]
+    while rannum1==rannum2 or rannum1==rannum3 or rannum1==rannum4 or rannum2==rannum3 or rannum2==rannum4 or rannum3==rannum4:
 
-    params['ideatree_search'] = params['comp_count'][rannum]
+        while rannum1==rannum2 or rannum1==rannum3 or rannum1==rannum4:
+            rannum1 = random.randint(0,cnt-1)
 
-    #送信ボタンが押された時
-    if 'set' in request.POST:
-        params['ideatree_search'] = IdeaTree.objects.filter(passcode=request.POST['treeID'])
-        params['ideatree_search'] = params['ideatree_search'][0]
+        while rannum2==rannum3 or rannum2==rannum4:
+            rannum2 = random.randint(0,cnt-1)
+
+        while rannum3==rannum4:
+            rannum3 = random.randint(0,cnt-1)
+
+
+    params['ideatree1'] = params['comp_count'][rannum1]
+    params['ideatree2'] = params['comp_count'][rannum2]
+    params['ideatree3'] = params['comp_count'][rannum3]
+    params['ideatree4'] = params['comp_count'][rannum4]
+
+    params['ideatree_search'] = params['comp_count'][rannum1]
+
+    if request.method == 'POST': # フォームで送信した時
+        #送信ボタンが押された時
+        if 'set' in request.POST:
+            params['ideatree_search'] = IdeaTree.objects.filter(passcode=request.POST['treeID'])
+            params['ideatree_search'] = params['ideatree_search'][0]
+        #もう一度ランダムに表示する
+        elif 're_random' in request.POST:
+            params['comp_count'] = IdeaTree.objects.filter(complete_flag=1)
+            cnt = len(params['comp_count'])
+
+            rannum1 = random.randint(0,cnt-1)
+            rannum2 = random.randint(0,cnt-1)
+            rannum3 = random.randint(0,cnt-1)
+            rannum4 = random.randint(0,cnt-1)
+
+            while rannum1==rannum2 or rannum1==rannum3 or rannum1==rannum4 or rannum2==rannum3 or rannum2==rannum4 or rannum3==rannum4:
+
+                while rannum1==rannum2 or rannum1==rannum3 or rannum1==rannum4:
+                    rannum1 = random.randint(0,cnt-1)
+
+                while rannum2==rannum3 or rannum2==rannum4:
+                    rannum2 = random.randint(0,cnt-1)
+
+                while rannum3==rannum4:
+                    rannum3 = random.randint(0,cnt-1)
+
+            params['ideatree1'] = params['comp_count'][rannum1]
+            params['ideatree2'] = params['comp_count'][rannum2]
+            params['ideatree3'] = params['comp_count'][rannum3]
+            params['ideatree4'] = params['comp_count'][rannum4]
 
     return render(request, 'user/search.html', params)
 
