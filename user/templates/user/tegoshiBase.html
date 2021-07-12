@@ -36,7 +36,17 @@
                     TEGOSHISYSTEM
                     </a>
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a class="nav-link text-white" href="">USERNAME : {{ user.username }}</a>
+=======
+                        <a class="nav-link text-white" href="">
+                            {% if user.is_authenticated %}
+                                <i class="fas fa-user-alt">{{ user.email }}</i>
+                            {% else %}
+                                <i class="fas fa-user-alt">※ログインしていません※</i>
+                            {% endif %}
+                        </a>
+>>>>>>> fc66e3b0ccd273661b2ecc188702432e939b634c
                     </li>
 
                     <li class="nav-item active">
@@ -44,8 +54,14 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-light text-white" id="dd2L" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MENU</a>
                         <div class="dropdown-menu dropdown-info" aria-labelledby="dd2L">
+<<<<<<< HEAD
                             <a class="dropdown-item waves-effect waves-light" href="/user/list">リスト</a>
                             <a class="dropdown-item waves-effect waves-light" href="{% url 'profile' %}">マイページ</a>
+=======
+                            <a class="dropdown-item waves-effect waves-light" href="/user/list">自分のプロジェクトリスト</a>
+                            <a class="dropdown-item waves-effect waves-light" href="/user/search/">検索</a>
+                            <a class="dropdown-item waves-effect waves-light" href="/user/profile/">プロフィール</a>
+>>>>>>> fc66e3b0ccd273661b2ecc188702432e939b634c
                         </div>
                     </li>
                 </ul>
@@ -134,7 +150,7 @@
     p.box {
         border-bottom: 1px dashed red;
     }
-    h1 {
+    .tanabeFont {
         margin: 50px 0;
         color: #000000;
         font-family: 'Indie Flower', cursive;
@@ -142,9 +158,9 @@
         font-weight: normal;
         text-align: center;
     }
-    h2 {
-        margin: 50px 0;
-        color: #fff;
+    .miuraFont {
+        margin: 20px 0;
+        color: #FFFFFF;
         font-family: 'Indie Flower', cursive;
         font-size: 48px;
         font-weight: normal;
@@ -160,5 +176,8 @@
         min-height: 694px;
         min-width: 874px;
         overflow: scroll;
+    }
+    table {
+        margin-left: 100px;
     }
 </style>

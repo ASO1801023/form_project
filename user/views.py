@@ -304,9 +304,10 @@ def willComplete(request):
     # urlからidを取得 end
 
     ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
-    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid) # Elmentを全取得
+    params['element_s'] = Element.objects.filter(ideatree_id=now_urlid).order_by('id').reverse() # Elmentを全取得
 
     params['ideatree_obj'] = ideatree_obj
+    params['element_s_lastWord'] = params['element_s'][0].name
     return render(request, 'user/willCompletePage.html', params)
 
 def completeSys(request): 
@@ -317,7 +318,19 @@ def completeSys(request):
     ideatree_obj = IdeaTree.objects.filter(id=nowId)
     IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
 
-    return render(request, 'user/list.html')
+    # リストに戻る処理
+    # ログインしているuserを取得する処理
+    cre = request.user.id
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0,user_id=cre) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1,user_id=cre) #未完成ideaTreeを取得
+    ideatree_form = IdeaTreeForm()
+
+    context = {
+        'ideatree_incomp' : ideatree_incomp,
+        'ideatree_comp' : ideatree_comp,
+        'ideatree_form' : ideatree_form,
+    }
+    return render(request, 'user/list.html', context)
 
 def willDelete(request):
     params = {'ans': '', 'form': None}
@@ -339,26 +352,20 @@ def deleteSys(request):
     IdeaTree.objects.filter(id=nowId).delete()
     Element.objects.filter(ideatree_id=nowId).delete()
 
-    return render(request, 'user/list.html')
+    # リストに戻る処理
+    # ログインしているuserを取得する処理
+    cre = request.user.id
+    ideatree_incomp = IdeaTree.objects.filter(complete_flag=0,user_id=cre) #未完成ideaTreeを取得 (, user=1)
+    ideatree_comp = IdeaTree.objects.filter(complete_flag=1,user_id=cre) #未完成ideaTreeを取得
+    ideatree_form = IdeaTreeForm()
 
+    context = {
+        'ideatree_incomp' : ideatree_incomp,
+        'ideatree_comp' : ideatree_comp,
+        'ideatree_form' : ideatree_form,
+    }
+    return render(request, 'user/list.html', context)
 
-def completeSys22222222(request): 
-    nowId = request.POST['nowId']
-
-    #完成ボタン押下時、登録処理を行う
-    if 'completeButton' in request.POST:
-        newName = request.POST['newName'] # テキストボックスから入手
-        newOverView = request.POST['newOverView'] # テキストボックスから入手
-
-        ideatree_obj = IdeaTree.objects.filter(id=nowId)
-        IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
-
-    #削除ボタン押下時、削除処理を実行する
-    if 'deleteButton' in request.POST:
-        IdeaTree.objects.filter(id=nowId).delete()
-        Element.objects.filter(ideatree_id=nowId).delete()
-
-    return render(request, 'user/completePage.html')
 
 # 初期(使わない)
 
@@ -406,38 +413,25 @@ def search(request):
     return render(request, 'user/search.html', params)
 
 def randomshow(request):
-    #ideatreeを全て取得
-    ideatree_obj = IdeaTree.objects.all()
-    #ideatreeの数を数える
-    TreeIDcount = IdeaTree.objects.all().count()
-    num1 = random.randint(0,TreeIDcount)
-    if num1>=1:
-        num1=num1-1
-    num2 = random.randint(0,TreeIDcount)
-    if num2>=1:
-        num2=num2-1
-    num3 = random.randint(0,TreeIDcount)
-    if num3>=1:
-        num3=num3-1
-    num4 = random.randint(0,TreeIDcount)
-    if num4>=1:
-        num4=num4-1
-
+    params = {'ans': '', 'form': None}
     #complete_flagが１のideatreeを取得
     params['comp_count'] = IdeaTree.objects.filter(complete_flag=1)
     cnt = len(params['comp_count'])
-    if(cnt<4):
-        str = ['ideatree1','ideatree2','ideatree3','ideatree4']
-        for n in str:
-            params[n] = IdeaTree.objects.all()
+    rannum = random.randint(0,cnt-5)
 
-    else:
-        params['ideatree1'] = getIdeaTree[num1]
-        params['ideatree2'] = getIdeaTree[num2]
-        params['ideatree3'] = getIdeaTree[num3]
-        params['ideatree4'] = getIdeaTree[num4]
+    params['ideatree1'] = params['comp_count'][rannum]
+    params['ideatree2'] = params['comp_count'][rannum+1]
+    params['ideatree3'] = params['comp_count'][rannum+2]
+    params['ideatree4'] = params['comp_count'][rannum+3]
 
-    return render(request, 'user/random.html', params)
+    params['ideatree_search'] = params['comp_count'][rannum]
+
+    #送信ボタンが押された時
+    if 'set' in request.POST:
+        params['ideatree_search'] = IdeaTree.objects.filter(passcode=request.POST['treeID'])
+        params['ideatree_search'] = params['ideatree_search'][0]
+
+    return render(request, 'user/search.html', params)
 
 
 
