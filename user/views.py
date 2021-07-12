@@ -173,6 +173,8 @@ def getIdeaTree(acc): # 指定したidのideatreeを取得
     retData['idea_theme'] = ideatree_obj[0].idea_theme
     retData['lastidea_id'] = ideatree_obj[0].lastidea_id
     retData['passcode'] = ideatree_obj[0].passcode
+    user_obj = User.objects.filter(id=ideatree_obj[0].user_id)
+    retData['username'] = user_obj[0].username
     return retData
 
 def insertElement(acc,num,ideatree_id,colorVal): # 言葉をElmentに登録
