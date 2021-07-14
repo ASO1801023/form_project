@@ -96,6 +96,8 @@ def completed(request):
 
     ideatree_obj = getIdeaTree(now_urlid) #ideatree取得
     element_s = Element.objects.filter(ideatree_id=ideatree_obj['id']) # Elmentを全取得
+    element_s = Element.objects.filter(ideatree_id=ideatree_obj['id']).order_by('id').reverse() # Elmentを全取得(反転ver)
+    params['element_s_lastWord'] = params['element_s'][0].name
     elem_lastnum = int(len(element_s)) # 葉っぱの数 == 最後の数字
 
     params['element_s'] = element_s #全ての葉っぱ
