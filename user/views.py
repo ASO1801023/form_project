@@ -324,7 +324,10 @@ def completeSys(request):
     newOverView = request.POST['newOverView'] # テキストボックスから入手
 
     ideatree_obj = IdeaTree.objects.filter(id=nowId)
-    IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=ideatree_obj[0].lastidea_id, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
+    element_s = Element.objects.filter(ideatree_id=ideatree_obj['id']).order_by('id').reverse() # Elmentを全取得(反転)
+    element_s_lastid = element_s['0'].id
+
+    IdeaTree(id=ideatree_obj[0].id, name=newName, overview=newOverView, complete_flag='1', idea_theme=ideatree_obj[0].idea_theme, lastidea_id=element_s_lastid, user_id=ideatree_obj[0].user_id, passcode=ideatree_obj[0].passcode).save()
 
     # リストに戻る処理
     # ログインしているuserを取得する処理

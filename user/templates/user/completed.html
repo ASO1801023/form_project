@@ -10,14 +10,13 @@
                 <div class="card p-4 mb-2" style="background-color: #FFEBF0;">
                     <h2> {{ ideatree_obj.name }}</h2>
                     <h5>１つ目の「何か」 : {{ ideatree_obj.idea_theme }}</h5>
-                    <h5>２つ目の「何か」 : </h5>　<!--ここラストワードを表示させたい-->
+                    <h5>２つ目の「何か」 : {{ element_s_lastWord }}</h5><!--ここラストワードを表示させたい-->
                 </div>
                 <hr>
                 <h5>作成者:{{ ideatree_obj.username }}</h5>
                 <h6>単語数:<b>{{ element_len }}</b>個 <br> passcode : {{ ideatree_obj.passcode }}</h6>
                 <h6><b>概要 : </b></h6>
                 <h6>{{ ideatree_obj.overview }}</h6><br> 
-                <h6>ラストワード:<b>{{ element_s_lastWord }}</b></h6>
             </div>
         </div>
 
