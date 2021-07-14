@@ -1,0 +1,76 @@
+{% extends 'user/tegoshiBase.html' %}
+
+{% block content %}
+<form action="/user/list_2/" method="POST">
+{% csrf_token %}
+
+<div class="tanabeFont">My List</div>
+<div>
+    <table>
+        <tr>
+            <th>Create New</th>
+            <td>
+                <div>
+                    <p class="box">
+                        <input type="button" data-toggle="modal" data-target="#helpPop" class="btn-flat-dashed-filled" value="+"></input>
+                    </p>
+                </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <th>un finished</th>
+            {% for incomplete in ideatree_incomp %}
+            <td>
+                <p class="box">
+                    <a href="/user/hikaruPath/?ideatreeid={{ incomplete.id }}" class="btn-flat-dashed-filled">
+                        {{ incomplete.idea_theme }}
+                    </a>
+                </p>
+            </td>
+            {% endfor %}
+        </tr>
+        
+        <tr>
+            <th>Complete</th>
+            {% for complete in ideatree_comp %}
+            <td>
+                <p class="box">
+                    <a href="/user/completed/?ideatreeid={{ complete.id }}" class="btn-flat-dashed-filled">
+                        {{ complete.name }}
+                    </a>
+                </p>
+            </td>
+            {% endfor %}
+        </tr>
+        
+    </table>
+</div>
+
+<!--　新規作成時ポップアップ -->
+<div class="modal fade right" id="helpPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalPreviewLabel"><i class="fa fa-question-circle-o" aria-hidden="true"></i>新規作成</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row text-center pt-5 pb-5">
+                <div class="col-sm-12">
+                    <input type="textbox" name="newTheme" placeholder="１つ目の「何か」"></input>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" name="newButton" class="btn btn-primary"  value="作成する"></input>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 新規作成時ポップアップ -->
+
+</form>
+{% endblock %}

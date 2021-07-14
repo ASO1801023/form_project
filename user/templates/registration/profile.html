@@ -1,0 +1,29 @@
+{% extends "registration/base.html" %}
+
+{% block content %}
+
+    <table class="table borderless">
+        <tbody>
+            <tr>
+                <th scope="row">username</th><td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td><form action="" method="POST">{{form}}</td>
+                    <td>
+                        <input type="submit" class="btn btn-primary" name="NameChangeButton" value="変更"></input>
+                        {% csrf_token %}
+                    </form></td>
+            </tr>
+            
+        <tr>
+            <th scope="row">E-mail</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th scope="row">登録日</th>
+            <td>{{ user.date_joined }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
