@@ -31,10 +31,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <a class="navbar-brand waves-effect" href="/">
-                    <!-- <img src="/image/theWorldLogo.png" alt="●" class="theWorld"> -->
-                    Tego shiritori
-                    </a>
+                    <div>
+                        <a class="navbar-brand waves-effect" href="/user/list">
+                            <!-- <img src="/image/theWorldLogo.png" alt="●" class="theWorld"> -->
+                            <img src="../../static/images/tego_logo.png" alt="" class="tegoshiritori">
+                        </a>
+                    </div>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/user/profile/">
                             {% if user.is_authenticated %}
@@ -93,6 +95,10 @@
 
     html{
         text-align:center;
+    }
+    .tegoshiritori{
+        width:  70px;       /* ※縦横を同値に */
+        height: 27px;       /* ※縦横を同値に */
     }
     .balloon3 {
         position: relative;
